@@ -26,4 +26,6 @@ const privileged = async (req, res, next) => {
   next()
 }
 
-module.exports.privileged = privileged
+module.exports = {
+  privileged
+}

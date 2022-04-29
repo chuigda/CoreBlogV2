@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const uuid = require('uuid').v4
 
 const { privileged } = require('./auth.js')
+const { requestDebug } = require('./util/request-debug.js')
 const { typeAssert, enableChainAPI } = require('./util/typeAssert.cjs')
 const cfgAttr = require('../src/config/cfgattr.json')
 const config = require('./config')
@@ -26,26 +27,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use((req, res, next) => {
-  const headers = { ...req.headers }
-  delete headers['host']
-  delete headers['user-agent']
-  delete headers['accept']
-  delete headers['accept-language']
-  delete headers['accept-encoding']
-  delete headers['origin']
-  delete headers['connection']
-  delete headers['if-none-match']
-
-  console.log(' ---= [ INCOMING REQUEST ] =------------')
-  console.log('request url:', req.url)
-  console.log('request method:', req.method)
-  console.log('request headers:', headers)
-  console.log('request query:', req.query)
-  console.log('request body:', req.body)
-  console.log('')
-  next()
-})
+app.use(requestDebug)
 
 app.post('/api/login', ({ body }, res) => {
   try {
