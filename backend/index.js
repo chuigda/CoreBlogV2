@@ -1,8 +1,11 @@
-const express = require('express')
 const cors = require('cors')
+const express = require('express')
+const mongoose = require('mongoose')
 const uuid = require('uuid').v4
-const { typeAssert, enableChainAPI } = require('./typeAssert.cjs')
+
+const { typeAssert, enableChainAPI } = require('./util/typeAssert.cjs')
 const cfgattr = require('../src/config/cfgattr.json')
+const config = require('./config')
 
 enableChainAPI()
 
@@ -85,6 +88,15 @@ app.get('/api/info2', priviledged, (req, res) => {
   res.json({ success: true, message: '', result: uuid() })
 })
 
-app.listen(port, () => {
-  console.log('application started')
-})
+const applicationStart = async () => {
+  await mongoose.connect(`mongodb://${config.mongo.host}:${config.mongo.port}/${config.mongo.db}`)
+  console.log('[app] connected to mongodb')
+
+  app.listen(port, () => {
+    console.log('[application] application started')
+  })
+}
+
+applicationStart()
+  .then(() => {})
+  .catch(err => console.error('[application] application failed to start: ', err))
