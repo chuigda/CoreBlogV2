@@ -3,38 +3,20 @@ const express = require('express')
 const mongoose = require('mongoose')
 const uuid = require('uuid').v4
 
+const { privileged } = require('./auth.js')
 const { typeAssert, enableChainAPI } = require('./util/typeAssert.cjs')
-const cfgattr = require('../src/config/cfgattr.json')
+const cfgAttr = require('../src/config/cfgattr.json')
 const config = require('./config')
 
 enableChainAPI()
 
 const fakeCred = (() => {
   const ret = {}
-  for (const cred of cfgattr.creds) {
+  for (const cred of cfgAttr.creds) {
     ret[cred.key] = uuid()
   }
   return ret
 })()
-
-const credAssertion = (() => {
-  const ret = {}
-  for (const cred of cfgattr.creds) {
-    ret[cred.header.toLowerCase()] = 'string'
-  }
-  return ret
-})()
-
-const priviledged = (req, res, next) => {
-  try {
-    typeAssert(req.headers, credAssertion)
-  } catch (typeAssertError) {
-    res.status(401).json({ success: false, message: typeAssertError })
-    return
-  }
-
-  next()
-}
 
 const app = express()
 const port = 3080
@@ -80,11 +62,11 @@ app.post('/api/login', ({ body }, res) => {
   res.json({ success: true, message: '', result: fakeCred })
 })
 
-app.get('/api/info', priviledged, (req, res) => {
+app.get('/api/info', privileged, (req, res) => {
   res.json({ success: true, message: '', result: '1145141919810' })
 })
 
-app.get('/api/info2', priviledged, (req, res) => {
+app.get('/api/info2', privileged, (req, res) => {
   res.json({ success: true, message: '', result: uuid() })
 })
 
@@ -93,10 +75,10 @@ const applicationStart = async () => {
   console.log('[app] connected to mongodb')
 
   app.listen(port, () => {
-    console.log('[application] application started')
+    console.log('[app] application started')
   })
 }
 
 applicationStart()
   .then(() => {})
-  .catch(err => console.error('[application] application failed to start: ', err))
+  .catch(err => console.error('[app] application failed to start: ', err))
