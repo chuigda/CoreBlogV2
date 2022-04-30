@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { createUser, findUser, userLogin } = require('../service/user.js')
+const { createUser, findUser, userLogin } = require('../svc/user.js')
 const { makeAccessToken } = require('../auth.js')
 const config = require('../config')
 const { typeAssert } = require('../util/typeAssert.cjs')

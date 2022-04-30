@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dayjs": "^1.11.1",
     "express": "^4.17.1",
     "md5": "^2.3.0",
     "method-override": "^3.0.0",

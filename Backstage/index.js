@@ -36,6 +36,7 @@ if (process.env.NODE_ENV === 'development') {
 // ========================================================
 
 app.use('/api/user', require('./ctl/user.js'))
+app.use('/api/blog', require('./ctl/blog.js'))
 
 // ========================================================
 // start application

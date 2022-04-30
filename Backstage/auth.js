@@ -1,6 +1,6 @@
 const uuid = require('uuid').v4
 
-const redisClient = require('./db/redis')
+const redisClient = require('./dao/redis')
 
 // ========================================================
 // access token creation
@@ -28,6 +28,9 @@ const credAssertion = (() => {
   return ret
 })()
 
+const userIdHeaderName = config.cfgAttr.creds[0].header.toLowerCase()
+const accessTokenHeaderName = config.cfgAttr.creds[1].header.toLowerCase()
+
 const privileged = async (req, res, next) => {
   try {
     typeAssert(req.headers, credAssertion)
@@ -36,9 +39,15 @@ const privileged = async (req, res, next) => {
     return
   }
 
-  const auth = await redisClient.get(req.headers.get(cfgAttr.creds[1].header))
-  if (auth !== req.headers.get(cfgAttr.creds[0].header)) {
+  const auth = await redisClient.get(req.headers[accessTokenHeaderName])
+  if (auth !== req.headers[userIdHeaderName]) {
     res.status(401).send('unauthorized')
+    return
+  }
+
+  req.auth = {
+    userId: req.headers[userIdHeaderName],
+    accessToken: req.headers[accessTokenHeaderName],
   }
 
   next()
