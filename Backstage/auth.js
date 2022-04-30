@@ -1,7 +1,22 @@
-const mongoose = require('mongoose')
+const uuid = require('uuid').v4
+
 const redisClient = require('./db/redis')
 
+// ========================================================
+// access token creation
+// ========================================================
+
+const makeAccessToken = async userId => {
+  const accessToken = uuid()
+  await redisClient.set(accessToken, userId, { EX: 60 * 60 * 24 * 7 })
+
+  return accessToken
+}
+
+// ========================================================
 // middlewares
+// ========================================================
+
 const { typeAssert } = require('./util/typeAssert.cjs')
 const config = require('./config')
 
@@ -30,5 +45,6 @@ const privileged = async (req, res, next) => {
 }
 
 module.exports = {
+  makeAccessToken,
   privileged
 }

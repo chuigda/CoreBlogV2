@@ -4,6 +4,7 @@ const { typeAssert } = require('../util/typeAssert.cjs')
 const configAssertion = {
   addr: 'string',
   port: 'number',
+  authToken: 'string',
   redis: {
     host: 'string',
     port: 'number'
