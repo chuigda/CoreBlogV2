@@ -4,6 +4,7 @@ const { typeAssert } = require('../util/type-assert.cjs')
 const { intString, boolString } = require('../util/assertions.js')
 const { privileged } = require('../auth.js')
 const { createBlog, countBlog, getBlog, listBlog, updateBlog, deleteBlog } = require('../svc/blog.js')
+const { trimBlogInfo } = require('../svc/trim.js')
 
 const router = express.Router()
 
@@ -48,7 +49,7 @@ router.get('/get', async (req, res) => {
     res.json({
       success: true,
       messageId: 'Blog.Get.Success',
-      data: blog
+      data: trimBlogInfo(blog)
     })
   }
 })
@@ -75,7 +76,7 @@ router.get('/list', async (req, res) => {
     success: true,
     messageId: 'Blog.List.Success',
     data: {
-      blogs,
+      blogs: blogs.map(trimBlogInfo),
       totalCount
     }
   })

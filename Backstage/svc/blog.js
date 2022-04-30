@@ -1,12 +1,13 @@
 const mongoose = require('mongoose')
 
 const Blog = require('../dao/blog')
+const Comment = require('../dao/comment')
 
 const { Types } = mongoose
 
 const createBlog = async (authorId, title, content) => {
   const blog = new Blog({
-    authorId,
+    authorId: new Types.ObjectId(authorId),
     title,
     content,
 
@@ -31,8 +32,28 @@ const getBlog = async blogId => {
         localField: 'authorId',
         foreignField: '_id',
         as: 'author'
+      },
+    },
+    {
+      $lookup: {
+        from: 'comments',
+        localField: '_id',
+        foreignField: 'blogId',
+        as: 'comments',
+        pipeline: [
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'authorId',
+              foreignField: '_id',
+              as: 'author'
+            }
+          },
+          { $unwind: { path: '$author' } }
+        ]
       }
-    }
+    },
+    { $unwind: { path: '$author' } }
   ])
 
   return blog[0]
@@ -52,8 +73,21 @@ const listBlog = (page, pageSize, sortByLastUpdate) => {
         localField: 'authorId',
         foreignField: '_id',
         as: 'author'
-      }
+      },
     },
+    {
+      $lookup: {
+        from: 'comments',
+        localField: '_id',
+        foreignField: 'blogId',
+        pipeline: [
+          { $count: 'count' }
+        ],
+        as: 'commentCount'
+      },
+    },
+    { $unwind: { path: '$commentCount' } },
+    { $unwind: { path: '$author' } },
     ...sortPipeline,
     { $skip: (page - 1) * pageSize },
     { $limit: pageSize }
@@ -77,7 +111,9 @@ const updateBlog = async (blogId, userId, newContent) => {
 }
 
 const deleteBlog = async (blogId, userId) => {
-  const blog = await Blog.findOne({ _id: blogId })
+  const blogObjectId = new Types.ObjectId(blogId)
+
+  const blog = await Blog.findOne({ _id: blogObjectId })
   if (!blog) {
     return 'NotFound'
   }
@@ -86,7 +122,8 @@ const deleteBlog = async (blogId, userId) => {
     return 'Unauthorized'
   }
 
-  await Blog.deleteOne({ _id: blogId })
+  await Blog.deleteOne({ _id: blogObjectId })
+  await Comment.deleteMany({ blogId: blogObjectId })
   return 'Success'
 }
 

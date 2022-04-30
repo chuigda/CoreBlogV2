@@ -2,17 +2,11 @@ const express = require('express')
 
 const { createUser, findUser, userLogin } = require('../svc/user.js')
 const { makeAccessToken } = require('../auth.js')
+const { trimUserInfo } = require('../svc/trim.js')
 const config = require('../config')
 const { typeAssert } = require('../util/type-assert.cjs')
 
 const router = express.Router()
-
-const trimUserInfo = userInfo => ({
-  userId: userInfo._id,
-  userName: userInfo.userName,
-  nickName: userInfo.nickName,
-  email: userInfo.email
-})
 
 router.post('/createUserAdmin', async (req, res) => {
   try {

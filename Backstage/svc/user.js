@@ -1,7 +1,7 @@
 const md5 = require('md5')
 const uuid = require('uuid').v4
 
-const User = require('../dao/user')
+const User = require('../dao/user.js')
 
 const hashPassword = (userName, password, hashSalt) => md5(userName + md5(password + hashSalt) + hashSalt)
 

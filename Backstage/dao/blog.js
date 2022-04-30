@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 
-const { Schema } = mongoose
+const { Schema, Types } = mongoose
 
 const blogSchema = new Schema({
-  authorId: String,
+  authorId: Types.ObjectId,
   title: String,
   content: String,
 
@@ -11,6 +11,4 @@ const blogSchema = new Schema({
   lastUpdate: Date
 })
 
-const Blog = mongoose.model('Blog', blogSchema)
-
-module.exports = Blog
+module.exports = mongoose.model('Blog', blogSchema)
