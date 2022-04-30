@@ -16,13 +16,13 @@ const configAssertion = {
 
 try {
   if (process.env.NODE_ENV === 'production') {
-    const config = require('./config.prod.js');
+    const config = require('./config.prod.js')
     typeAssert(config, configAssertion)
 
     module.exports = config
   } else {
-    const config = require('./config.dev.js');
-      typeAssert(config, configAssertion)
+    const config = require('./config.dev.js')
+    typeAssert(config, configAssertion)
 
     module.exports = config
   }

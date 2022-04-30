@@ -1,0 +1,26 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "airbnb-base"
+    ],
+    "env": {
+      "node": true,
+      "es6": false,
+      "browser": true
+    },
+    "rules": {
+      "no-console": "off",
+      "semi": ["error", "never"],
+      "no-restricted-syntax": "off",
+      "comma-dangle": "off",
+      "class-methods-use-this": "off",
+      "arrow-parens": "off",
+      "no-continue": "off",
+      "no-else-return": "off",
+      "no-return-await": "off",
+      "quote-props": "off",
+      "import/prefer-default-export": "off"
+    },
+    "settings": {
+    }
+}

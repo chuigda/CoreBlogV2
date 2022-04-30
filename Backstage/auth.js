@@ -1,5 +1,8 @@
-const { typeAssert } = require('./util/typeAssert.cjs')
+const mongoose = require('mongoose')
 const redisClient = require('./db/redis')
+
+// middlewares
+const { typeAssert } = require('./util/typeAssert.cjs')
 const cfgAttr = require('../src/config/cfgattr.json')
 
 const credAssertion = (() => {
@@ -18,8 +21,8 @@ const privileged = async (req, res, next) => {
     return
   }
 
-  const accessToken = await redisClient.hGetAll(req.headers.get(cfgAttr.creds[1].header))
-  if (accessToken.userId !== req.headers.get(cfgAttr.creds[0].header)) {
+  const auth = await redisClient.get(req.headers.get(cfgAttr.creds[1].header))
+  if (auth !== req.headers.get(cfgAttr.creds[0].header)) {
     res.status(401).send('unauthorized')
   }
 
