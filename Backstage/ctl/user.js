@@ -3,8 +3,8 @@ const express = require('express')
 const { createUser, findUser, userLogin } = require('../svc/user.js')
 const { makeAccessToken } = require('../auth.js')
 const { trimUserInfo } = require('../svc/trim.js')
-const config = require('../config')
 const { typeAssert } = require('../util/type-assert.cjs')
+const config = require('../config')
 
 const router = express.Router()
 

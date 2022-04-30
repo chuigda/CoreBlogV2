@@ -3,22 +3,19 @@ import {
   BrowserRouter, Switch, Route, Link, useHistory
 } from 'react-router-dom'
 import { Button } from '@mui/material'
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
 
+import SearchBar from './components/app-bar.jsx'
 import Login from './views/LoginPage.jsx'
 import Index from './views/IndexPage.jsx'
-import translation from './translation'
-
-i18n.use(initReactI18next)
-  .init(translation)
-  .then(() => {})
 
 const App = () => {
   const history = useHistory()
+
   return (
     <BrowserRouter>
       <div className="App">
+        <SearchBar />
+        <div style={{ marginTop: 8 }}>
         <Switch>
           <Route exact path="/login">
             <Login history={history}/>
@@ -33,6 +30,7 @@ const App = () => {
             </Link>
           </Route>
         </Switch>
+        </div>
       </div>
     </BrowserRouter>
   )

@@ -24,7 +24,7 @@ const translation = {
         'Comment.Delete.Unauthorized': 'You\'re not the author of this comment',
         'Comment.Delete.Success': 'Successfully deleted comment',
 
-        'UI.AppBar.Search': 'Search',
+        'UI.AppBar.Search': 'Search...',
       }
     },
     zh_CN: {
@@ -51,14 +51,14 @@ const translation = {
         'Comment.Delete.Unauthorized': '你不是该评论的作者',
         'Comment.Delete.Success': '删除评论成功',
 
-        'UI.AppBar.Search': '搜索',
+        'UI.AppBar.Search': '搜索...',
       }
     },
-    lng: 'zh_CN',
-    fallbackLng: 'zh_CN',
-    interpolation: {
-      escapeValue: false
-    }
+  },
+  lng: 'zh_CN',
+  fallbackLng: 'en',
+  interpolation: {
+    escapeValue: false
   }
 }
 

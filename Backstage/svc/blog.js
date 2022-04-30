@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
-const Blog = require('../dao/blog')
-const Comment = require('../dao/comment')
+const Blog = require('../dao/blog.js')
+const Comment = require('../dao/comment.js')
 
 const { Types } = mongoose
 

@@ -1,6 +1,6 @@
-import {getLocalStorage, purgeLocalStorage, setLocalStorage} from './localStorage'
-import {userCreds} from '../config/config'
-import {typeAssert} from './typeAssert'
+import { getLocalStorage, purgeLocalStorage, setLocalStorage } from './localStorage'
+import { userCreds } from '../config/config'
+import { typeAssert } from './typeAssert'
 
 export const getCreds = () => {
   const ret = {}
