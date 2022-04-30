@@ -4,7 +4,7 @@ const methodOverride = require('method-override')
 const mongoose = require('mongoose')
 
 const { requestDebug } = require('./util/request-debug.js')
-const { enableChainAPI } = require('./util/typeAssert.cjs')
+const { enableChainAPI } = require('./util/type-assert.cjs')
 const config = require('./config')
 
 // ========================================================

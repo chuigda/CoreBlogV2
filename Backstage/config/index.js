@@ -1,5 +1,5 @@
 const cfgAttr = require('../../cfgAttr/index.json')
-const { typeAssert } = require('../util/typeAssert.cjs')
+const { typeAssert } = require('../util/type-assert.cjs')
 
 const configAssertion = {
   addr: 'string',

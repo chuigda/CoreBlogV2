@@ -17,7 +17,7 @@ const makeAccessToken = async userId => {
 // middlewares
 // ========================================================
 
-const { typeAssert } = require('./util/typeAssert.cjs')
+const { typeAssert } = require('./util/type-assert.cjs')
 const config = require('./config')
 
 const credAssertion = (() => {

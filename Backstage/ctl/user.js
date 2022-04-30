@@ -3,7 +3,7 @@ const express = require('express')
 const { createUser, findUser, userLogin } = require('../svc/user.js')
 const { makeAccessToken } = require('../auth.js')
 const config = require('../config')
-const { typeAssert } = require('../util/typeAssert.cjs')
+const { typeAssert } = require('../util/type-assert.cjs')
 
 const router = express.Router()
 
@@ -28,6 +28,7 @@ router.post('/createUserAdmin', async (req, res) => {
       success: false,
       messageId: 'User.CreateByAdmin.BadToken'
     })
+    return
   }
 
   const { userName, nickName, password, email } = req.body
@@ -44,6 +45,7 @@ router.get('/info', async (req, res) => {
     typeAssert(req.query, { userName: 'string' })
   } catch (e) {
     res.status(400).send()
+    return
   }
 
   const user = await findUser(req.query.userName)
@@ -63,9 +65,10 @@ router.get('/info', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   try {
-    typeAssert(req.body, {userName: 'string', password: 'string'})
+    typeAssert(req.body, { userName: 'string', password: 'string' })
   } catch (e) {
     res.status(400).send()
+    return
   }
   const { userName, password } = req.body
 
