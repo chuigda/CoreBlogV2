@@ -19,8 +19,7 @@
       "no-else-return": "off",
       "no-return-await": "off",
       "quote-props": "off",
-      "import/prefer-default-export": "off"
-    },
-    "settings": {
+      "global-require": "off",
+      "import/extensions": "off"
     }
 }

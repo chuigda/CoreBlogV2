@@ -1,10 +1,10 @@
 {
-  "name": "mock",
+  "name": "coreblog-v2-backstage",
   "version": "1.0.0",
   "description": "Mock server for testing frontend system",
   "main": "index.js",
   "scripts": {
-    "mock": "node index.js"
+    "dev": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +14,10 @@
     "mongoose": "^6.3.1",
     "redis": "^4.0.6",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.0"
   }
 }

@@ -6,14 +6,13 @@ const uuid = require('uuid').v4
 const { privileged } = require('./auth.js')
 const { requestDebug } = require('./util/request-debug.js')
 const { typeAssert, enableChainAPI } = require('./util/typeAssert.cjs')
-const cfgAttr = require('../src/config/cfgattr.json')
 const config = require('./config')
 
 enableChainAPI()
 
 const fakeCred = (() => {
   const ret = {}
-  for (const cred of cfgAttr.creds) {
+  for (const cred of config.cfgAttr.creds) {
     ret[cred.key] = uuid()
   }
   return ret
@@ -32,8 +31,8 @@ app.use(requestDebug)
 app.post('/api/login', ({ body }, res) => {
   try {
     typeAssert(body, {
-      userName: 'string'.chainWith(x => x.length !== 0 ? true : 'empty userName'),
-      password: 'string'.chainWith(x => x.length !== 0 ? true : 'empty password')
+      userName: 'string'.chainWith(x => (x.length !== 0 ? true : 'empty userName')),
+      password: 'string'.chainWith(x => (x.length !== 0 ? true : 'empty password'))
     })
   } catch (typeAssertError) {
     console.log('type assertion failed: ', typeAssertError)

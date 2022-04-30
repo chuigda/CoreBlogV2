@@ -1,3 +1,4 @@
+const cfgAttr = require('../../cfgAttr/index.json')
 const { typeAssert } = require('../util/typeAssert.cjs')
 
 const configAssertion = {
@@ -19,12 +20,18 @@ try {
     const config = require('./config.prod.js')
     typeAssert(config, configAssertion)
 
-    module.exports = config
+    module.exports = {
+      ...config,
+      cfgAttr
+    }
   } else {
     const config = require('./config.dev.js')
     typeAssert(config, configAssertion)
 
-    module.exports = config
+    module.exports = {
+      ...config,
+      cfgAttr
+    }
   }
 } catch (e) {
   console.error('[config] type assertion failure:', e)

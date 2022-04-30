@@ -3,11 +3,11 @@ const redisClient = require('./db/redis')
 
 // middlewares
 const { typeAssert } = require('./util/typeAssert.cjs')
-const cfgAttr = require('../src/config/cfgattr.json')
+const config = require('./config')
 
 const credAssertion = (() => {
   const ret = {}
-  for (const cred of cfgAttr.creds) {
+  for (const cred of config.cfgAttr.creds) {
     ret[cred.header.toLowerCase()] = 'string'
   }
   return ret

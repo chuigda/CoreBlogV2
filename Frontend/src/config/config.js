@@ -1,9 +1,9 @@
 // TODO: configurations shared by frontend and backend are stored in this json file
 // in order to make these configurations work for both ESM and CJS
 import { typeAssert } from '../utils/typeAssert'
-import cfgattr from './cfgattr.json'
+import cfgAttr from '../../../cfgAttr/index.json'
 
-typeAssert(cfgattr, {
+typeAssert(cfgAttr, {
   dev: {
     backendUrl: 'string'
   },
@@ -22,13 +22,13 @@ typeAssert(cfgattr, {
 export const backendUrl = (() => {
   switch (process.env.NODE_ENV) {
     case 'development':
-      return cfgattr.dev.backendUrl
+      return cfgAttr.dev.backendUrl
     default:
-      return cfgattr.pro.backendUrl
+      return cfgAttr.pro.backendUrl
   }
 })()
 
-export const userCreds = cfgattr.creds
+export const userCreds = cfgAttr.creds
 
 // TODO: setup custom logged-out actions
 // Giving a hint message, redirect the page, force page update or so
