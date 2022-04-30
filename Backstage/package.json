@@ -12,6 +12,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "md5": "^2.3.0",
+    "method-override": "^3.0.0",
     "mongoose": "^6.3.1",
     "redis": "^4.0.6",
     "uuid": "^8.3.2"

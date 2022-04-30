@@ -1,5 +1,6 @@
 const cors = require('cors')
 const express = require('express')
+const methodOverride = require('method-override')
 const mongoose = require('mongoose')
 
 const { requestDebug } = require('./util/request-debug.js')
@@ -18,6 +19,14 @@ const { port } = config
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+app.use(methodOverride())
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+
+  res.status(500).send('Internal server error')
+})
+
 if (process.env.NODE_ENV === 'development') {
   app.use(requestDebug)
 }

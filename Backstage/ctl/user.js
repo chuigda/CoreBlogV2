@@ -40,7 +40,11 @@ router.post('/createUserAdmin', async (req, res) => {
 })
 
 router.get('/info', async (req, res) => {
-  typeAssert(req.query, { userName: 'string' })
+  try {
+    typeAssert(req.query, { userName: 'string' })
+  } catch (e) {
+    res.status(400).send()
+  }
 
   const user = await findUser(req.query.userName)
   if (!user) {
@@ -58,7 +62,11 @@ router.get('/info', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-  typeAssert(req.body, { userName: 'string', password: 'string' })
+  try {
+    typeAssert(req.body, {userName: 'string', password: 'string'})
+  } catch (e) {
+    res.status(400).send()
+  }
   const { userName, password } = req.body
 
   const user = await userLogin(userName, password)
