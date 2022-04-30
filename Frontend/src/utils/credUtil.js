@@ -1,16 +1,11 @@
-import {
-  getLocalStorage,
-  setLocalStorage,
-  purgeLocalStorage
-} from './localStorage'
-import { userCreds } from '../config/config'
-import { typeAssert } from './typeAssert'
+import {getLocalStorage, purgeLocalStorage, setLocalStorage} from './localStorage'
+import {userCreds} from '../config/config'
+import {typeAssert} from './typeAssert'
 
 export const getCreds = () => {
   const ret = {}
   for (const cred of userCreds) {
-    const item = getLocalStorage(cred.storageName)
-    ret[cred.key] = item
+    ret[cred.key] = getLocalStorage(cred.storageName)
   }
   return ret
 }

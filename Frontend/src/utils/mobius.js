@@ -47,7 +47,7 @@ export const AxiosRequest = (function () {
   }
 
   AxiosRequest.prototype.params = function (params) {
-    this.params = params
+    this.paramsObject = params
     return this
   }
 

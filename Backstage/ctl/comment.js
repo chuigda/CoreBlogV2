@@ -23,7 +23,7 @@ router.post('/comment', privileged, async (req, res) => {
   const result = await createComment(blogId, userId, content, replyTo)
   res.json({
     success: result === 'Success',
-    messageId: `Comment.Create.${result}`
+    messageId: `Comment.Add.${result}`
   })
 })
 

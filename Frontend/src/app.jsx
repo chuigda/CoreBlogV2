@@ -3,9 +3,16 @@ import {
   BrowserRouter, Switch, Route, Link, useHistory
 } from 'react-router-dom'
 import { Button } from '@mui/material'
+import i18n from 'i18next'
+import { initReactI18next } from 'react-i18next'
 
 import Login from './views/LoginPage.jsx'
 import Index from './views/IndexPage.jsx'
+import translation from './translation'
+
+i18n.use(initReactI18next)
+  .init(translation)
+  .then(() => {})
 
 const App = () => {
   const history = useHistory()

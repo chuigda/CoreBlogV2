@@ -1,7 +1,8 @@
 {
   "name": "coreblog-v2-backstage",
   "version": "1.0.0",
-  "description": "Mock server for testing frontend system",
+  "private": true,
+  "description": "Backstage of CoreBlog V2",
   "main": "index.js",
   "scripts": {
     "dev": "node index.js"
