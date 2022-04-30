@@ -66,10 +66,12 @@ router.get('/list', async (req, res) => {
     return
   }
   const { page: pageStr, pageSize: pageSizeStr, sortByLastUpdate } = req.query
-  const page = parseInt(pageStr, 10)
-  const pageSize = parseInt(pageSizeStr, 10)
 
-  const blogs = await listBlog(page, pageSize, sortByLastUpdate === 'true')
+  const blogs = await listBlog(
+    parseInt(pageStr, 10),
+    parseInt(pageSizeStr, 10),
+    sortByLastUpdate === 'true'
+  )
   const totalCount = await countBlog()
 
   res.json({
