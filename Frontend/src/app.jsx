@@ -20,7 +20,9 @@ const App = () => {
         <div style={{
           display: 'flex', justifyContent: 'center', paddingLeft: 20, paddingRight: 20
         }}>
-          <div style={{ marginTop: 14, maxWidth: 1000, width: 'calc(100% - 20px)' }}>
+          <div style={{
+            marginTop: 14, marginBottom: 20, maxWidth: 1000, width: 'calc(100% - 20px)'
+          }}>
             <Switch>
               <Route exact path="/">
                 <Index />
