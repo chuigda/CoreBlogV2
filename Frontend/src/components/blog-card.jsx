@@ -4,14 +4,16 @@ import {
   Stack, Card, CardContent, Divider
 } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import { AccessTime, Edit, Visibility } from '@mui/icons-material'
+import {
+  Person, AccessTime, Edit, Visibility
+} from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import { prettyTime } from '../utils/prettyTime'
 
 const BlogCard = ({
-  blogId, title, content, commentCount, createdAt, lastUpdate, isPreview
+  blogId, author, title, content, commentCount, createdAt, lastUpdate, isPreview
 }) => {
   const { t } = useTranslation()
 
@@ -24,8 +26,8 @@ const BlogCard = ({
       <CardContent sx={{ paddingBottom: 16 }}>
         <Typography variant="h6"
                     component={isPreview ? Link : 'div'}
-                    to={isPreview ? `/blog/${blogId}` : undefined}
-        >
+                    sx={{ textDecoration: 'none', boxShadow: 'none' }}
+                    to={isPreview ? `/blog/${blogId}` : undefined}>
           {title}
         </Typography>
         <Divider style={{
@@ -44,10 +46,18 @@ const BlogCard = ({
         </Typography>
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 0, md: 4 }}>
           <div style={{ display: 'flex', columnGap: 4 }}>
+            <Person />
+            <Typography component="div" sx={{ display: 'inline' }}>
+              { t('UI.Blog.Author') }
+              { ': ' }
+              { author }
+            </Typography>
+          </div>
+          <div style={{ display: 'flex', columnGap: 4 }}>
             <AccessTime />
             <Typography component="div" sx={{ display: 'inline' }}>
               { t('UI.Blog.CreateTime') }
-              &nbsp;
+              { ': ' }
               { prettyTime(createdAt, timeFmt, dateTimeFmt, yearDateTimeFmt) }
             </Typography>
           </div>
@@ -55,7 +65,7 @@ const BlogCard = ({
             <Edit />
             <Typography component="div" sx={{ display: 'inline' }}>
               { t('UI.Blog.UpdateTime') }
-              &nbsp;
+              { ': ' }
               { prettyTime(lastUpdate, timeFmt, dateTimeFmt, yearDateTimeFmt) }
             </Typography>
           </div>
@@ -75,6 +85,7 @@ const BlogCard = ({
 
 BlogCard.propTypes = {
   blogId: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   commentCount: PropTypes.number.isRequired,

@@ -32,6 +32,7 @@ const translation = {
 
         'UI.AppBar.Search': 'Search...',
         'UI.MainMenu.SetLanguage': 'Choose language',
+        'UI.Blog.Author': 'Author',
         'UI.Blog.CreateTime': 'Created at',
         'UI.Blog.UpdateTime': 'Updated at',
         'UI.Blog.CommentCount': 'Comments'
@@ -67,6 +68,7 @@ const translation = {
 
         'UI.AppBar.Search': '搜索...',
         'UI.MainMenu.SetLanguage': '选择语言',
+        'UI.Blog.Author': '作者',
         'UI.Blog.CreateTime': '创建时间',
         'UI.Blog.UpdateTime': '最后更新',
         'UI.Blog.CommentCount': '条评论'
