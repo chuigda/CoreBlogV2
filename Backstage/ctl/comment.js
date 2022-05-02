@@ -2,17 +2,20 @@ const express = require('express')
 
 const { privileged } = require('../auth.js')
 const { typeAssert } = require('../util/type-assert.cjs')
+const { objectId } = require('../util/assertions.js')
 const { createComment, deleteComment } = require('../svc/comment.js')
 
 const router = express.Router()
 
+const addCommentBodyAssertion = {
+  blogId: objectId,
+  content: 'string',
+  replyTo: objectId.orNull()
+}
+
 router.post('/comment', privileged, async (req, res) => {
   try {
-    typeAssert(req.body, {
-      blogId: 'string',
-      content: 'string',
-      replyTo: 'string?'
-    })
+    typeAssert(req.body, addCommentBodyAssertion)
   } catch (e) {
     res.status(400).send()
     return
@@ -30,7 +33,7 @@ router.post('/comment', privileged, async (req, res) => {
 router.post('/delete', privileged, async (req, res) => {
   try {
     typeAssert(req.body, {
-      commentId: 'string'
+      commentId: objectId
     })
   } catch (e) {
     res.status(400).send()

@@ -9,6 +9,7 @@ import Language from './views/language.jsx'
 import Login from './views/LoginPage.jsx'
 import Index from './views/index-page.jsx'
 import BlogRead from './views/blog-read.jsx'
+import About from './views/about.jsx'
 
 const App = () => {
   const history = useHistory()
@@ -41,6 +42,9 @@ const App = () => {
                 <Link to="/login">
                   <Button variant="contained">Goto log-in</Button>
                 </Link>
+              </Route>
+              <Route exact path="/about">
+                <About />
               </Route>
             </Switch>
           </div>

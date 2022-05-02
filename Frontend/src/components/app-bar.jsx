@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
@@ -12,10 +12,14 @@ import SearchIcon from '@mui/icons-material/Search'
 import HomeIcon from '@mui/icons-material/Home'
 import TranslateIcon from '@mui/icons-material/Translate'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import LoginIcon from '@mui/icons-material/Login'
+import InfoIcon from '@mui/icons-material/Info'
 import { styled, alpha } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation, useHistory } from 'react-router-dom'
+
+import UserContext from './user-context'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -47,7 +51,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     width: '16ch',
     '&:focus': {
       width: '24ch',
-      [theme.breakpoints.up('xs')]: {
+      [theme.breakpoints.down('md')]: {
         width: '18ch'
       }
     },
@@ -58,6 +62,7 @@ const MainAppBar = () => {
   const { t } = useTranslation()
   const location = useLocation()
   const history = useHistory()
+  const user = useContext(UserContext)
 
   const [anchor, setAnchor] = React.useState(null)
   const open = Boolean(anchor)
@@ -102,6 +107,35 @@ const MainAppBar = () => {
               <TranslateIcon />
             </ListItemIcon>
             { t('UI.MainMenu.SetLanguage') }
+          </MenuItem>
+          {
+            user ? (
+              <MenuItem onClick={handleClose}
+                        component={Link}
+                        to={'/user'}>
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                  { user.name }
+                </ListItemIcon>
+              </MenuItem>
+            ) : (
+              <MenuItem onClick={handleClose}
+                        component={Link}
+                        to={'/login'}>
+                <ListItemIcon>
+                  <LoginIcon />
+                </ListItemIcon>
+                { t('UI.MainMenu.Login') }
+              </MenuItem>
+            )
+          }
+          <MenuItem onClick={handleClose}
+                    component={Link}
+                    to={'/about'}>
+            <ListItemIcon>
+              <InfoIcon />
+            </ListItemIcon>
+            { t('UI.MainMenu.About') }
           </MenuItem>
         </Menu>
         <Typography

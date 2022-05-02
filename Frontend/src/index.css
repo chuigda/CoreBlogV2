@@ -1,3 +1,33 @@
-* {
-    font-family: 'SimSun', 'Noto Serif', 'Liberation Serif', sans-serif;
+@font-face {
+    font-family: "iconfont";
+    src: url('./resources/iconfont.ttf?t=1651508525073') format('truetype');
+}
+
+.iconfont {
+    /*noinspection CssNoGenericFontName*/
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-redis:before {
+    content: "\e619";
+}
+
+.icon-react:before {
+    content: "\e741";
+}
+
+.icon-material-ui:before {
+    content: "\ec07";
+}
+
+.icon-mongo-db:before {
+    content: "\e66d";
+}
+
+.icon-node-js:before {
+    content: "\ec12";
 }
