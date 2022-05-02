@@ -48,7 +48,10 @@ const translation = {
           + 'Feng Tang aged before his talents recognized, victorious Li Guang was never conferred marquis. '
           + 'It\'s not the lack of wise emperors that leads to Jia Yi\'s being exiled. '
           + 'Isn\'t it in an era of wise politics that Liang Hong hid in the shore of Qilu? '
-          + 'All of these are just caused by that wise people feel poverty at ease and brilliant people conform to their fate."'
+          + 'All of these are just caused by that wise people feel poverty at ease and brilliant people conform to their fate."',
+        'UI.About.EasterEggClick0': 'Click',
+        'UI.About.EasterEggClick1': 'more times to enter developer mode',
+        'UI.About.EasterEggClick2': 'You\'re now in developer mode',
       }
     },
     zh_CN: {
@@ -93,7 +96,11 @@ const translation = {
         'UI.About.Skills': '使用的技术',
         'UI.About.Version.Frontend': '前端版本',
         'UI.About.Version.Backend': '后端版本',
-        'UI.About.Bothering': '“时运不济，命运多舛，冯唐易老，李广难封。屈贾谊于长沙，非无圣主；窜梁鸿于海曲，岂乏明时。”'
+        'UI.About.Bothering': '“时运不济，命运多舛，冯唐易老，李广难封。'
+          + '屈贾谊于长沙，非无圣主；窜梁鸿于海曲，岂乏明时。”',
+        'UI.About.EasterEggClick0': '再点击',
+        'UI.About.EasterEggClick1': '次进入开发者模式',
+        'UI.About.EasterEggClick2': '你已进入开发者模式'
       }
     },
   },
