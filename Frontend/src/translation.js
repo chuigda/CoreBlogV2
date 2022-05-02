@@ -1,3 +1,5 @@
+import {getLocalStorage} from "./utils/localStorage";
+
 const translation = {
   resources: {
     en: {
@@ -25,6 +27,7 @@ const translation = {
         'Comment.Delete.Success': 'Successfully deleted comment',
 
         'UI.AppBar.Search': 'Search...',
+        'UI.MainMenu.SetLanguage': 'Choose language'
       }
     },
     zh_CN: {
@@ -52,10 +55,11 @@ const translation = {
         'Comment.Delete.Success': '删除评论成功',
 
         'UI.AppBar.Search': '搜索...',
+        'UI.MainMenu.SetLanguage': '选择语言'
       }
     },
   },
-  lng: 'zh_CN',
+  lng: getLocalStorage('UI.Language') || 'zh_CN',
   fallbackLng: 'en',
   interpolation: {
     escapeValue: false

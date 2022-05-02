@@ -1,22 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { ThemeProvider } from '@mui/material/styles'
 import { SnackbarProvider } from 'notistack'
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
 import App from './app.jsx'
 import translation from './translation'
-
-console.log(translation)
+import './index.css'
+import theme from './theme'
 
 i18n.use(initReactI18next)
   .init(translation)
   .then(() => {
     ReactDOM.render(
       <SnackbarProvider maxSnack={5}>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
+        <ThemeProvider theme={theme}>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </ThemeProvider>
       </SnackbarProvider>,
       document.getElementById('root')
     )

@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import InputBase from '@mui/material/InputBase'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
-import Box from '@mui/material/Box'
+import TranslateIcon from '@mui/icons-material/Translate'
+import { Link } from 'react-router-dom'
 
 import { styled, alpha } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
@@ -18,12 +22,8 @@ const Search = styled('div')(({ theme }) => ({
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
-  },
+  marginLeft: theme.spacing(1),
+  width: 'auto'
 }))
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -40,57 +40,75 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    width: '16ch',
+    '&:focus': {
       width: '24ch',
-      '&:focus': {
-        width: '32ch',
-      },
     },
   },
 }))
 
-const SearchBar = () => {
+const MainAppBar = () => {
   const { t } = useTranslation()
-  const [searchText, setSearchText] = useState('')
+
+  const [anchor, setAnchor] = React.useState(null)
+  const open = Boolean(anchor)
+  const handleClick = event => setAnchor(event.currentTarget)
+  const handleClose = () => setAnchor(null)
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1 }}
-          >
-            CoreBlog
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder={ t('UI.AppBar.Search') }
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <AppBar position="static">
+      <Toolbar>
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          sx={{ mr: 2 }}
+          onClick={handleClick}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Menu anchorEl={anchor} open={open} onClose={handleClose}>
+          <MenuItem onClick={handleClose}
+                    component={Link}
+                    to={'/language'}>
+            <ListItemIcon>
+              <TranslateIcon />
+            </ListItemIcon>
+            { t('UI.MainMenu.SetLanguage') }
+          </MenuItem>
+        </Menu>
+        <Typography
+          variant="h6"
+          noWrap
+          component="div"
+          sx={{
+            flexGrow: 1,
+            display: {
+              xs: 'none',
+              sm: 'unset',
+              md: 'unset',
+              lg: 'unset',
+              xl: 'unset',
+            }
+          }}
+        >
+          CoreBlog
+        </Typography>
+        <div style={{ flexGrow: 1 }} />
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder={ t('UI.AppBar.Search') }
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </Search>
+      </Toolbar>
+    </AppBar>
   )
 }
 
-export default SearchBar
+export default MainAppBar

@@ -106,9 +106,7 @@ router.post('/update', privileged, async (req, res) => {
 
 router.post('/delete', privileged, async (req, res) => {
   try {
-    typeAssert(req.body, {
-      blogId: 'string'
-    })
+    typeAssert(req.body, { blogId: 'string' })
   } catch (e) {
     res.status(400).send()
     return

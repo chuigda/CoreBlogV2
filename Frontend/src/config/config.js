@@ -1,5 +1,3 @@
-// TODO: configurations shared by frontend and backend are stored in this json file
-// in order to make these configurations work for both ESM and CJS
 import { typeAssert } from '../utils/typeAssert'
 import cfgAttr from '../../../cfgAttr/index.json'
 
