@@ -28,7 +28,7 @@ const translation = {
 
         'UI.Format.Time': 'HH:MM',
         'UI.Format.DateTime': 'D/M HH:MM',
-        'UI.Format.DateTime.Yearly': 'M/D/YYYY HH:MM',
+        'UI.Format.YearDateTime': 'M/D/YYYY HH:MM',
 
         'UI.AppBar.Search': 'Search...',
         'UI.MainMenu.SetLanguage': 'Choose language',
@@ -64,7 +64,7 @@ const translation = {
 
         'UI.Format.Time': 'HH:MM',
         'UI.Format.DateTime': 'M 月 D 日 HH:MM',
-        'UI.Format.DateTime.Yearly': 'YYYY 年 M 月 D 日 HH:MM',
+        'UI.Format.YearDateTime': 'YYYY 年 M 月 D 日 HH:MM',
 
         'UI.AppBar.Search': '搜索...',
         'UI.MainMenu.SetLanguage': '选择语言',

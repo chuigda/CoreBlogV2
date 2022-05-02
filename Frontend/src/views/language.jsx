@@ -11,7 +11,6 @@ import { getLocalStorage, setLocalStorage } from '../utils/localStorage'
 
 const Language = () => {
   const { t, i18n } = useTranslation()
-
   const language = getLocalStorage('UI.Language') || 'zh_CN'
 
   const changeLanguage = e => {
@@ -21,7 +20,7 @@ const Language = () => {
   }
 
   return (
-    <Card style={{ padding: 16, width: 400 }}>
+    <Card style={{ padding: 16 }}>
       <FormControl>
         <FormLabel>{ t('UI.MainMenu.SetLanguage') }</FormLabel>
         <RadioGroup defaultValue={language} onChange={changeLanguage}>

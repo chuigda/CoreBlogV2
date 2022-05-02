@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
@@ -47,6 +47,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     width: '16ch',
     '&:focus': {
       width: '24ch',
+      [theme.breakpoints.up('xs')]: {
+        width: '18ch'
+      }
     },
   },
 }))
@@ -62,7 +65,7 @@ const MainAppBar = () => {
   const handleClose = () => setAnchor(null)
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar>
         <IconButton
           size="large"
@@ -91,7 +94,7 @@ const MainAppBar = () => {
             </IconButton>
           )
         }
-        <Menu anchorEl={anchor} open={open} onClose={handleClose}>
+        <Menu anchorEl={anchor} open={open} getContentAnchorEl={null} onClose={handleClose}>
           <MenuItem onClick={handleClose}
                     component={Link}
                     to={'/language'}>
