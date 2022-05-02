@@ -6,11 +6,12 @@ import {
 import Typography from '@mui/material/Typography'
 import { AccessTime, Edit, Visibility } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
 import { prettyTime } from '../utils/prettyTime'
 
 const BlogCard = ({
-  title, content, commentCount, createdAt, lastUpdate, isPreview
+  blogId, title, content, commentCount, createdAt, lastUpdate, isPreview
 }) => {
   const { t } = useTranslation()
 
@@ -20,13 +21,11 @@ const BlogCard = ({
 
   return (
     <Card>
-      <CardContent sx={{
-        '& > MuiCardContent-root': {
-          paddingBottom: 16
-        }
-      }
-      }>
-        <Typography variant="h6" component="div">
+      <CardContent sx={{ paddingBottom: 16 }}>
+        <Typography variant="h6"
+                    component={isPreview ? Link : 'div'}
+                    to={isPreview ? `/blog/${blogId}` : undefined}
+        >
           {title}
         </Typography>
         <Divider style={{
@@ -75,6 +74,7 @@ const BlogCard = ({
 }
 
 BlogCard.propTypes = {
+  blogId: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   commentCount: PropTypes.number.isRequired,

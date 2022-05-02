@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 import { withSnackbar } from 'notistack'
 import { useTranslation } from 'react-i18next'
 
@@ -23,9 +22,9 @@ const Index = ({ enqueueSnackbar }) => {
     })
   }, [])
 
-  console.log(blogList)
   const blogComponents = useMemo(() => blogList.map((x, idx) => (
-    <BlogCard createdAt={x.createdAt}
+    <BlogCard blogId={x.blogId}
+              createdAt={x.createdAt}
               commentCount={x.commentCount}
               lastUpdate={x.lastUpdate}
               content={x.content}
@@ -43,8 +42,7 @@ const Index = ({ enqueueSnackbar }) => {
 }
 
 Index.propTypes = {
-  history: PropTypes.object.isRequired,
   enqueueSnackbar: PropTypes.func.isRequired
 }
 
-export default withSnackbar(withRouter(Index))
+export default withSnackbar(Index)

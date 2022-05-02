@@ -8,6 +8,7 @@ import MainAppBar from './components/app-bar.jsx'
 import Language from './views/language.jsx'
 import Login from './views/LoginPage.jsx'
 import Index from './views/index-page.jsx'
+import BlogRead from './views/blog-read.jsx'
 
 const App = () => {
   const history = useHistory()
@@ -22,7 +23,10 @@ const App = () => {
           <div style={{ marginTop: 14, maxWidth: 1000 }}>
             <Switch>
               <Route exact path="/">
-                <Index history={history} />
+                <Index />
+              </Route>
+              <Route exact path="/blog/:blogId">
+                <BlogRead />
               </Route>
               <Route exact path="/login">
                 <Login history={history} />

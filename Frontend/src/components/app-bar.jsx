@@ -9,12 +9,13 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
+import HomeIcon from '@mui/icons-material/Home'
 import TranslateIcon from '@mui/icons-material/Translate'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 import { styled, alpha } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useHistory } from 'react-router-dom'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -53,26 +54,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const MainAppBar = () => {
   const { t } = useTranslation()
   const location = useLocation()
+  const history = useHistory()
 
   const [anchor, setAnchor] = React.useState(null)
   const open = Boolean(anchor)
   const handleClick = event => setAnchor(event.currentTarget)
   const handleClose = () => setAnchor(null)
-
-  const contextualButtons = []
-  if (location.pathname !== '/') {
-    contextualButtons.push(
-      <IconButton size="large"
-                  edge="start"
-                  color="inherit"
-                  sx={{ mr: 2 }}
-                  component={Link}
-                  key="back-icon-button"
-                  to={'/'}>
-        <ArrowBackIcon />
-      </IconButton>
-    )
-  }
 
   return (
     <AppBar position="static">
@@ -85,7 +72,25 @@ const MainAppBar = () => {
           onClick={handleClick}>
           <MenuIcon />
         </IconButton>
-        {contextualButtons}
+        <IconButton size="large"
+                    edge="start"
+                    color="inherit"
+                    sx={{ mr: 2 }}
+                    onClick={() => history.goBack()}>
+          <ArrowBackIcon />
+        </IconButton>
+        {
+          (location.pathname !== '/') && (
+            <IconButton size="large"
+                        edge="start"
+                        color="inherit"
+                        sx={{ mr: 2 }}
+                        component={Link}
+                        to="/">
+              <HomeIcon />
+            </IconButton>
+          )
+        }
         <Menu anchorEl={anchor} open={open} onClose={handleClose}>
           <MenuItem onClick={handleClose}
                     component={Link}
