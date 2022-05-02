@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { typeAssert } = require('../util/type-assert.cjs')
-const { intString, boolString } = require('../util/assertions.js')
+const { intString, boolString, objectId } = require('../util/assertions.js')
 const { privileged } = require('../auth.js')
 const { createBlog, countBlog, getBlog, listBlog, updateBlog, deleteBlog } = require('../svc/blog.js')
 const { trimBlogInfo } = require('../svc/trim.js')
@@ -16,6 +16,7 @@ router.post('/add', privileged, async (req, res) => {
     })
   } catch (e) {
     res.status(400).send()
+    return
   }
   const { title, content } = req.body
   const { userId } = req.auth
@@ -32,7 +33,7 @@ router.post('/add', privileged, async (req, res) => {
 
 router.get('/get', async (req, res) => {
   try {
-    typeAssert(req.query, { blogId: 'string' })
+    typeAssert(req.query, { blogId: objectId })
   } catch (e) {
     res.status(400).send()
     return
@@ -87,7 +88,7 @@ router.get('/list', async (req, res) => {
 router.post('/update', privileged, async (req, res) => {
   try {
     typeAssert(req.body, {
-      blogId: 'string',
+      blogId: objectId,
       newContent: 'string'
     })
   } catch (e) {
@@ -106,11 +107,12 @@ router.post('/update', privileged, async (req, res) => {
 
 router.post('/delete', privileged, async (req, res) => {
   try {
-    typeAssert(req.body, { blogId: 'string' })
+    typeAssert(req.body, { blogId: objectId })
   } catch (e) {
     res.status(400).send()
     return
   }
+
   const { blogId } = req.body
   const { userId } = req.auth
 
