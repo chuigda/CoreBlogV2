@@ -1,4 +1,5 @@
 import React from 'react'
+import Card from '@mui/material/Card'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
@@ -20,7 +21,7 @@ const Language = () => {
   }
 
   return (
-    <div style={{ width: '100%', paddingLeft: 20, paddingRight: 20 }}>
+    <Card style={{ padding: 16, width: 400 }}>
       <FormControl>
         <FormLabel>{ t('UI.MainMenu.SetLanguage') }</FormLabel>
         <RadioGroup defaultValue={language} onChange={changeLanguage}>
@@ -28,7 +29,7 @@ const Language = () => {
           <FormControlLabel control={<Radio />} label="English" value="en" />
         </RadioGroup>
       </FormControl>
-    </div>
+    </Card>
   )
 }
 

@@ -26,8 +26,15 @@ const translation = {
         'Comment.Delete.Unauthorized': 'You\'re not the author of this comment',
         'Comment.Delete.Success': 'Successfully deleted comment',
 
+        'UI.Format.Time': 'HH:MM',
+        'UI.Format.DateTime': 'D/M HH:MM',
+        'UI.Format.DateTime.Yearly': 'M/D/YYYY HH:MM',
+
         'UI.AppBar.Search': 'Search...',
-        'UI.MainMenu.SetLanguage': 'Choose language'
+        'UI.MainMenu.SetLanguage': 'Choose language',
+        'UI.Blog.CreateTime': 'Created at',
+        'UI.Blog.UpdateTime': 'Updated at',
+        'UI.Blog.CommentCount': 'Comments'
       }
     },
     zh_CN: {
@@ -54,8 +61,15 @@ const translation = {
         'Comment.Delete.Unauthorized': '你不是该评论的作者',
         'Comment.Delete.Success': '删除评论成功',
 
+        'UI.Format.Time': 'HH:MM',
+        'UI.Format.DateTime': 'M 月 D 日 HH:MM',
+        'UI.Format.DateTime.Yearly': 'YYYY 年 M 月 D 日 HH:MM',
+
         'UI.AppBar.Search': '搜索...',
-        'UI.MainMenu.SetLanguage': '选择语言'
+        'UI.MainMenu.SetLanguage': '选择语言',
+        'UI.Blog.CreateTime': '创建时间',
+        'UI.Blog.UpdateTime': '最后更新',
+        'UI.Blog.CommentCount': '条评论'
       }
     },
   },

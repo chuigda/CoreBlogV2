@@ -7,7 +7,7 @@ import { Button } from '@mui/material'
 import MainAppBar from './components/app-bar.jsx'
 import Language from './views/language.jsx'
 import Login from './views/LoginPage.jsx'
-import Index from './views/IndexPage.jsx'
+import Index from './views/index-page.jsx'
 
 const App = () => {
   const history = useHistory()
@@ -16,24 +16,28 @@ const App = () => {
     <BrowserRouter>
       <div className="App">
         <MainAppBar />
-        <div style={{ marginTop: 8 }}>
-        <Switch>
-          <Route exact path="/login">
-            <Login history={history} />
-          </Route>
-          <Route exact path="/language">
-            <Language />
-          </Route>
-          <Route exact path="/index">
-            <Index history={history} />
-          </Route>
-          <Route exact path="/logged-out">
-            <div>You were logged out, damn it</div>
-            <Link to="/login">
-              <Button variant="contained">Goto log-in</Button>
-            </Link>
-          </Route>
-        </Switch>
+        <div style={{
+          display: 'flex', justifyContent: 'center', paddingLeft: 20, paddingRight: 20
+        }}>
+          <div style={{ marginTop: 14, maxWidth: 1000 }}>
+            <Switch>
+              <Route exact path="/">
+                <Index history={history} />
+              </Route>
+              <Route exact path="/login">
+                <Login history={history} />
+              </Route>
+              <Route exact path="/language">
+                <Language />
+              </Route>
+              <Route exact path="/logged-out">
+                <div>You were logged out, damn it</div>
+                <Link to="/login">
+                  <Button variant="contained">Goto log-in</Button>
+                </Link>
+              </Route>
+            </Switch>
+          </div>
         </div>
       </div>
     </BrowserRouter>
