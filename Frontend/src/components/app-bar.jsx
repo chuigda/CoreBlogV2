@@ -62,7 +62,8 @@ const MainAppBar = () => {
   const { t } = useTranslation()
   const location = useLocation()
   const history = useHistory()
-  const user = useContext(UserContext)
+  const userContext = useContext(UserContext)
+  console.log(userContext.user)
 
   const [anchor, setAnchor] = React.useState(null)
   const open = Boolean(anchor)
@@ -99,7 +100,7 @@ const MainAppBar = () => {
             </IconButton>
           )
         }
-        <Menu anchorEl={anchor} open={open} getContentAnchorEl={null} onClose={handleClose}>
+        <Menu anchorEl={anchor} open={open} onClose={handleClose}>
           <MenuItem onClick={handleClose}
                     component={Link}
                     to={'/language'}>
@@ -109,14 +110,16 @@ const MainAppBar = () => {
             { t('UI.MainMenu.SetLanguage') }
           </MenuItem>
           {
-            user ? (
+            userContext.user ? (
               <MenuItem onClick={handleClose}
                         component={Link}
                         to={'/user'}>
                 <ListItemIcon>
                   <AccountCircleIcon />
-                  { user.name }
                 </ListItemIcon>
+                { t('UI.MainMenu.CurrentUser') }
+                { ': ' }
+                { userContext.user.userName }
               </MenuItem>
             ) : (
               <MenuItem onClick={handleClose}
