@@ -52,7 +52,7 @@ const BlogEdit = ({ display }) => {
                    label={t('UI.BlogEdit.TitleInput')}
                    sx={{
                      width: '50%',
-                     'mobile': {
+                     mobile: {
                        width: '100%'
                      }
                    }}
@@ -66,6 +66,12 @@ const BlogEdit = ({ display }) => {
           <Editor height="50vh"
                   defaultLanguage="markdown"
                   onMount={(editor => { editorRef.current = editor })}
+                  options={{
+                    minimap: {
+                      enabled: false
+                    },
+                    wordWrap: true
+                  }}
           />
         </div>
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
