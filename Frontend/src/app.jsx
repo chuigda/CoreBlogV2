@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {
-  BrowserRouter, Switch, Route, Link, useHistory
+  BrowserRouter, Switch, Route, Link, useHistory, useRouteMatch
 } from 'react-router-dom'
 import { Button } from '@mui/material'
 
@@ -19,49 +19,53 @@ const initUserInfo = JSON.parse(getLocalStorage('User.Info'))
 const App = () => {
   const history = useHistory()
   const [user, setUser] = useState(initUserInfo)
+  const matchIndex = useRouteMatch({
+    path: '/',
+    strict: true,
+    exact: true
+  })
+  const matchEdit = useRouteMatch({
+    path: '/edit',
+    strict: true,
+    exact: true
+  })
 
   return (
-    <BrowserRouter>
-      <UserContext.Provider value={{ user, setUser }}>
-        <div className="App">
-          <MainAppBar />
+    <UserContext.Provider value={{ user, setUser }}>
+      <div className="App">
+        <MainAppBar />
+        <div style={{
+          display: 'flex', justifyContent: 'center', paddingLeft: 20, paddingRight: 20
+        }}>
           <div style={{
-            display: 'flex', justifyContent: 'center', paddingLeft: 20, paddingRight: 20
+            marginTop: 14, marginBottom: 20, maxWidth: 1000, width: 'calc(100% - 20px)'
           }}>
-            <div style={{
-              marginTop: 14, marginBottom: 20, maxWidth: 1000, width: 'calc(100% - 20px)'
-            }}>
-              <Switch>
-                <Route exact path="/">
-                  <Index />
-                </Route>
-                <Route exact path="/blog/:blogId">
-                  <BlogRead />
-                </Route>
-                <Route exact path="/edit">
-                  <BlogEdit />
-                </Route>
-                <Route exact path="/login">
-                  <Login history={history} />
-                </Route>
-                <Route exact path="/language">
-                  <Language />
-                </Route>
-                <Route exact path="/logged-out">
-                  <div>You were logged out, damn it</div>
-                  <Link to="/login">
-                    <Button variant="contained">Goto log-in</Button>
-                  </Link>
-                </Route>
-                <Route exact path="/about">
-                  <About />
-                </Route>
-              </Switch>
-            </div>
+            { <Index display={matchIndex} /> }
+            { <BlogEdit display={matchEdit} /> }
+            <Switch>
+              <Route exact path="/blog/:blogId">
+                <BlogRead />
+              </Route>
+              <Route exact path="/login">
+                <Login history={history} />
+              </Route>
+              <Route exact path="/language">
+                <Language />
+              </Route>
+              <Route exact path="/logged-out">
+                <div>You were logged out, damn it</div>
+                <Link to="/login">
+                  <Button variant="contained">Goto log-in</Button>
+                </Link>
+              </Route>
+              <Route exact path="/about">
+                <About />
+              </Route>
+            </Switch>
           </div>
         </div>
-      </UserContext.Provider>
-    </BrowserRouter>
+      </div>
+    </UserContext.Provider>
   )
 }
 

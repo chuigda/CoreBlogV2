@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { listBlog } from '../api'
 import BlogCard from '../components/blog-card.jsx'
 
-const Index = ({ enqueueSnackbar }) => {
+const Index = ({ display, enqueueSnackbar }) => {
   const { t } = useTranslation()
   const [blogList, setBlogList] = useState([])
 
@@ -37,7 +37,7 @@ const Index = ({ enqueueSnackbar }) => {
 
   return (
     <div style={{
-      display: 'flex',
+      display: display ? 'flex' : 'none',
       flexDirection: 'column',
       rowGap: '14px'
     }}>
@@ -47,6 +47,7 @@ const Index = ({ enqueueSnackbar }) => {
 }
 
 Index.propTypes = {
+  display: PropTypes.any.isRequired,
   enqueueSnackbar: PropTypes.func.isRequired
 }
 
