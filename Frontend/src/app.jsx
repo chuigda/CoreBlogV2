@@ -13,6 +13,7 @@ import About from './views/about.jsx'
 import UserContext from './components/user-context'
 import { getLocalStorage } from './utils/localStorage'
 import BlogEdit from './views/blog-edit.jsx'
+import Dial from './components/dial'
 
 const initUserInfo = JSON.parse(getLocalStorage('User.Info'))
 
@@ -62,6 +63,7 @@ const App = () => {
             </Switch>
           </div>
         </div>
+        <Dial />
       </div>
     </UserContext.Provider>
   )

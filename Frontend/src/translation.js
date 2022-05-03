@@ -64,6 +64,14 @@ const translation = {
         'UI.About.EasterEggClick0': 'Click',
         'UI.About.EasterEggClick1': 'more times to enter developer mode',
         'UI.About.EasterEggClick2': 'You\'re now in developer mode',
+
+        'UI.Dial.WriteBlog': 'Write a blog',
+        'UI.Dial.Share': 'Share',
+
+        'UI.Dialog.Share': 'Share',
+        'UI.Dialog.CopyLink': 'Copy link',
+        'UI.Dialog.Copied': 'Copied!',
+        'UI.Dialog.Close': 'Close',
       }
     },
     zh_CN: {
@@ -124,7 +132,15 @@ const translation = {
           + '屈贾谊于长沙，非无圣主；窜梁鸿于海曲，岂乏明时。”',
         'UI.About.EasterEggClick0': '再点击',
         'UI.About.EasterEggClick1': '次进入开发者模式',
-        'UI.About.EasterEggClick2': '你已进入开发者模式'
+        'UI.About.EasterEggClick2': '你已进入开发者模式',
+
+        'UI.Dial.WriteBlog': '撰写博客',
+        'UI.Dial.Share': '分享',
+
+        'UI.Dialog.Share': '分享',
+        'UI.Dialog.CopyLink': '复制链接',
+        'UI.Dialog.Copied': '已复制！',
+        'UI.Dialog.Close': '关闭'
       }
     },
   },
