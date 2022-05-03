@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
   Switch, Route, Link, useHistory, useRouteMatch
 } from 'react-router-dom'
@@ -24,27 +24,25 @@ const App = () => {
     strict: true,
     exact: true
   })
-  const matchEdit = useRouteMatch({
-    path: '/edit',
-    strict: true,
-    exact: true
-  })
+  const indexPageRef = useRef()
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <div className="App">
-        <MainAppBar />
+        <MainAppBar refreshIndex={() => indexPageRef.current.loadBlogList(1)} />
         <div style={{
           display: 'flex', justifyContent: 'center', paddingLeft: 20, paddingRight: 20
         }}>
           <div style={{
             marginTop: 14, marginBottom: 20, maxWidth: 1000, width: 'calc(100% - 20px)'
           }}>
-            { <Index display={matchIndex} /> }
-            { <BlogEdit display={matchEdit} /> }
+            { <Index ref={indexPageRef} display={matchIndex} /> }
             <Switch>
               <Route exact path="/blog/:blogId">
                 <BlogRead />
+              </Route>
+              <Route exact path="/edit">
+                <BlogEdit />
               </Route>
               <Route exact path="/login">
                 <Login history={history} />

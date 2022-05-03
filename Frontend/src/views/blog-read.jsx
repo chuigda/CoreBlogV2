@@ -21,7 +21,7 @@ const BlogRead = ({ enqueueSnackbar }) => {
       }
 
       setBlog(res.data)
-    })
+    }).catch(() => enqueueSnackbar(t('Server.InternalError'), { variant: 'error' }))
   }, [])
 
   const blogCard = useMemo(() => (blog

@@ -15,10 +15,11 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import LoginIcon from '@mui/icons-material/Login'
 import InfoIcon from '@mui/icons-material/Info'
-import AddIcon from '@mui/icons-material/Add'
+import SyncIcon from '@mui/icons-material/Sync'
 import { styled, alpha } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation, useHistory } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import UserContext from './user-context'
 
@@ -59,7 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }))
 
-const MainAppBar = () => {
+const MainAppBar = ({ refreshIndex }) => {
   const { t } = useTranslation()
   const location = useLocation()
   const history = useHistory()
@@ -101,14 +102,13 @@ const MainAppBar = () => {
           )
         }
         {
-          (location.pathname === '/' && userContext.user) && (
+          (location.pathname === '/') && (
             <IconButton size="large"
                         edge="start"
                         color="inherit"
                         sx={{ mr: 2 }}
-                        component={Link}
-                        to="/edit">
-              <AddIcon />
+                        onClick={ refreshIndex }>
+              <SyncIcon />
             </IconButton>
           )
         }
@@ -183,6 +183,10 @@ const MainAppBar = () => {
       </Toolbar>
     </AppBar>
   )
+}
+
+MainAppBar.propTypes = {
+  refreshIndex: PropTypes.func.isRequired
 }
 
 export default MainAppBar

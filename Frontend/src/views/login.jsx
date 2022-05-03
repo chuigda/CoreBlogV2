@@ -44,6 +44,7 @@ const Login = () => {
         enqueueSnackbar(t(res.messageId), { variant: 'success' })
         history.replace('/')
       })
+      .catch(() => enqueueSnackbar(t('Server.InternalError'), { variant: 'error' }))
   }
 
   return (

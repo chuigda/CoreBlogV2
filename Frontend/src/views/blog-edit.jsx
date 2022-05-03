@@ -1,5 +1,4 @@
 import React, { useRef } from 'react'
-import PropTypes from 'prop-types'
 import {
   Button, Card, CardContent, TextField
 } from '@mui/material'
@@ -10,7 +9,7 @@ import { useHistory } from 'react-router-dom'
 
 import { addBlog } from '../api'
 
-const BlogEdit = ({ display }) => {
+const BlogEdit = () => {
   const { t } = useTranslation()
   const { enqueueSnackbar } = useSnackbar()
   const history = useHistory()
@@ -39,11 +38,11 @@ const BlogEdit = ({ display }) => {
 
       enqueueSnackbar(t(res.messageId), { variant: 'success' })
       history.replace(`/blog/${res.data.blogId}`)
-    })
+    }).catch(() => enqueueSnackbar(t('Server.InternalError'), { variant: 'error' }))
   }
 
   return (
-    <Card sx={{ display: display ? undefined : 'none' }}>
+    <Card>
       <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <TextField size="medium"
                    variant="standard"
@@ -82,10 +81,6 @@ const BlogEdit = ({ display }) => {
       </CardContent>
     </Card>
   )
-}
-
-BlogEdit.propTypes = {
-  display: PropTypes.any.isRequired
 }
 
 export default BlogEdit

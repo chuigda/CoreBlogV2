@@ -25,6 +25,7 @@ const translation = {
         'Comment.Delete.NotFound': 'Comment not found or deleted',
         'Comment.Delete.Unauthorized': 'You\'re not the author of this comment',
         'Comment.Delete.Success': 'Successfully deleted comment',
+        'Server.InternalError': 'Server error, please try again later',
 
         'UI.Format.Time': 'HH:MM',
         'UI.Format.DateTime': 'D/M HH:MM',
@@ -88,6 +89,7 @@ const translation = {
         'Comment.Delete.NotFound': '评论不存在或已被删除',
         'Comment.Delete.Unauthorized': '你不是该评论的作者',
         'Comment.Delete.Success': '删除评论成功',
+        'Server.InternalError': '服务器遇到问题，请稍候再试',
 
         'UI.Format.Time': 'HH:MM',
         'UI.Format.DateTime': 'M 月 D 日 HH:MM',
