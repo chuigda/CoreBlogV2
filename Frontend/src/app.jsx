@@ -3,17 +3,16 @@ import {
   Switch, Route, Link, useHistory, useRouteMatch
 } from 'react-router-dom'
 import { Button } from '@mui/material'
-
 import MainAppBar from './components/app-bar.jsx'
+import Dial from './components/dial.jsx'
 import Language from './views/language.jsx'
 import Login from './views/login.jsx'
 import Index from './views/index-page.jsx'
 import BlogRead from './views/blog-read.jsx'
 import About from './views/about.jsx'
+import BlogEdit from './views/blog-edit.jsx'
 import UserContext from './components/user-context'
 import { getLocalStorage } from './utils/localStorage'
-import BlogEdit from './views/blog-edit.jsx'
-import Dial from './components/dial'
 
 const initUserInfo = JSON.parse(getLocalStorage('User.Info'))
 
@@ -29,10 +28,16 @@ const App = () => {
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <div className="App">
+      <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
         <MainAppBar refreshIndex={() => indexPageRef.current.loadBlogList(1)} />
         <div style={{
-          display: 'flex', justifyContent: 'center', paddingLeft: 20, paddingRight: 20
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          alignItems: 'center',
+          paddingLeft: 20,
+          paddingRight: 20,
+          overflow: 'scroll'
         }}>
           <div style={{
             marginTop: 14, marginBottom: 20, maxWidth: 1000, width: 'calc(100% - 20px)'

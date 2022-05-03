@@ -1,4 +1,5 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useState } from 'react'
+import { Button, Popover } from '@mui/material'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
@@ -50,13 +51,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
-    width: '16ch',
-    '&:focus': {
-      width: '24ch',
-      [theme.breakpoints.down('md')]: {
-        width: '18ch'
-      }
-    },
+    width: '360px',
+    [theme.breakpoints.down('md')]: {
+      width: '240px'
+    }
   },
 }))
 
@@ -65,11 +63,28 @@ const MainAppBar = ({ refreshIndex }) => {
   const location = useLocation()
   const history = useHistory()
   const userContext = useContext(UserContext)
+  const searchBoxRef = useRef()
 
-  const [anchor, setAnchor] = React.useState(null)
+  const [anchor, setAnchor] = useState(null)
   const open = Boolean(anchor)
+
+  const [searchMenuAnchor, setSearchMenuAnchor] = useState(null)
+  const searchMenuOpen = Boolean(searchMenuAnchor)
+  const [searchText, setSearchText] = useState('')
+
   const handleClick = event => setAnchor(event.currentTarget)
   const handleClose = () => setAnchor(null)
+
+  const handleSearchFocus = e => {
+    const { value } = e.target
+    if (value.length > 0) {
+      setSearchMenuAnchor(searchBoxRef.current)
+      setSearchText(value)
+    } else {
+      setSearchMenuAnchor(null)
+    }
+  }
+  const handleSearchMenuClose = () => setSearchMenuAnchor(null)
 
   return (
     <AppBar position="sticky">
@@ -171,15 +186,33 @@ const MainAppBar = ({ refreshIndex }) => {
           CoreBlog
         </Typography>
         <div style={{ flexGrow: 1 }} />
-        <Search>
+        <Search ref={searchBoxRef}>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase
             placeholder={ t('UI.AppBar.Search') }
             inputProps={{ 'aria-label': 'search' }}
+            onChange={handleSearchFocus}
+            onFocus={handleSearchFocus}
           />
         </Search>
+        <Popover anchorEl={searchMenuAnchor}
+                 disableAutoFocus={true}
+                 disableEnforceFocus={true}
+                 open={searchMenuOpen}
+                 onClose={handleSearchMenuClose}
+                 anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <Button>
+              { t('UI.Search.Title') }
+              { ': ' }
+              { searchText }
+            </Button>
+            <Button>{ t('UI.Search.FullText') }</Button>
+            <Button>{ t('UI.Search.User') }</Button>
+          </div>
+        </Popover>
       </Toolbar>
     </AppBar>
   )

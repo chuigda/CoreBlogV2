@@ -72,6 +72,10 @@ const translation = {
         'UI.Dialog.CopyLink': 'Copy link',
         'UI.Dialog.Copied': 'Copied!',
         'UI.Dialog.Close': 'Close',
+
+        'UI.Search.Title': 'Search in title',
+        'UI.Search.FullText': 'Search in full text',
+        'UI.Search.User': 'Search an author'
       }
     },
     zh_CN: {
@@ -140,7 +144,11 @@ const translation = {
         'UI.Dialog.Share': '分享',
         'UI.Dialog.CopyLink': '复制链接',
         'UI.Dialog.Copied': '已复制！',
-        'UI.Dialog.Close': '关闭'
+        'UI.Dialog.Close': '关闭',
+
+        'UI.Search.Title': '在标题中搜索',
+        'UI.Search.FullText': '全文搜索',
+        'UI.Search.User': '搜索用户'
       }
     },
   },
