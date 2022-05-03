@@ -86,7 +86,7 @@ const listBlog = (page, pageSize, sortByLastUpdate) => {
         as: 'commentCount'
       },
     },
-    { $unwind: { path: '$commentCount' } },
+    { $unwind: { path: '$commentCount', preserveNullAndEmptyArrays: true } },
     { $unwind: { path: '$author' } },
     ...sortPipeline,
     { $skip: (page - 1) * pageSize },

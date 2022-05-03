@@ -23,7 +23,8 @@ const trimBlogInfo = ({
   createdAt,
   lastUpdate,
   comments: comments ? comments.map(trimCommentInfo) : null,
-  commentCount: commentCount ? commentCount.count : (comments.length || 0)
+  // eslint-disable-next-line no-nested-ternary
+  commentCount: commentCount ? commentCount.count : (comments ? comments.length : 0)
 })
 
 module.exports = {

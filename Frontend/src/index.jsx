@@ -9,7 +9,6 @@ import App from './app.jsx'
 import translation from './translation'
 import './index.css'
 import theme from './theme'
-import { getLocalStorage } from './utils/localStorage'
 
 i18n.use(initReactI18next)
   .init(translation)

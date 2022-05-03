@@ -36,7 +36,11 @@ const Index = ({ enqueueSnackbar }) => {
   )), [blogList])
 
   return (
-    <div>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      rowGap: '14px'
+    }}>
       { blogComponents }
     </div>
   )

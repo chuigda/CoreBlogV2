@@ -15,6 +15,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import LoginIcon from '@mui/icons-material/Login'
 import InfoIcon from '@mui/icons-material/Info'
+import AddIcon from '@mui/icons-material/Add'
 import { styled, alpha } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation, useHistory } from 'react-router-dom'
@@ -63,7 +64,6 @@ const MainAppBar = () => {
   const location = useLocation()
   const history = useHistory()
   const userContext = useContext(UserContext)
-  console.log(userContext.user)
 
   const [anchor, setAnchor] = React.useState(null)
   const open = Boolean(anchor)
@@ -97,6 +97,18 @@ const MainAppBar = () => {
                         component={Link}
                         to="/">
               <HomeIcon />
+            </IconButton>
+          )
+        }
+        {
+          (location.pathname === '/' && userContext.user) && (
+            <IconButton size="large"
+                        edge="start"
+                        color="inherit"
+                        sx={{ mr: 2 }}
+                        component={Link}
+                        to="/edit">
+              <AddIcon />
             </IconButton>
           )
         }

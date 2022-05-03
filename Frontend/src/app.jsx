@@ -12,6 +12,7 @@ import BlogRead from './views/blog-read.jsx'
 import About from './views/about.jsx'
 import UserContext from './components/user-context'
 import { getLocalStorage } from './utils/localStorage'
+import BlogEdit from './views/blog-edit.jsx'
 
 const initUserInfo = JSON.parse(getLocalStorage('User.Info'))
 
@@ -36,6 +37,9 @@ const App = () => {
                 </Route>
                 <Route exact path="/blog/:blogId">
                   <BlogRead />
+                </Route>
+                <Route exact path="/edit">
+                  <BlogEdit />
                 </Route>
                 <Route exact path="/login">
                   <Login history={history} />
