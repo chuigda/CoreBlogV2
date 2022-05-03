@@ -37,10 +37,14 @@ const App = () => {
           alignItems: 'center',
           paddingLeft: 20,
           paddingRight: 20,
-          overflow: 'scroll'
+          overflowY: 'scroll',
+          overflowX: 'hidden'
         }}>
           <div style={{
-            marginTop: 14, marginBottom: 20, maxWidth: 1000, width: 'calc(100% - 20px)'
+            paddingTop: 14,
+            paddingBottom: 20,
+            maxWidth: 1000,
+            width: 'calc(100% - 20px)'
           }}>
             { <Index ref={indexPageRef} display={matchIndex} /> }
             <Switch>
