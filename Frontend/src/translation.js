@@ -75,7 +75,8 @@ const translation = {
 
         'UI.Search.Title': 'Search in title',
         'UI.Search.FullText': 'Search in full text',
-        'UI.Search.User': 'Search an author'
+        'UI.Search.User': 'Search an author',
+        'UI.Search.Unimplemented': 'Search is not implemented yet'
       }
     },
     zh_CN: {
@@ -148,7 +149,8 @@ const translation = {
 
         'UI.Search.Title': '在标题中搜索',
         'UI.Search.FullText': '全文搜索',
-        'UI.Search.User': '搜索用户'
+        'UI.Search.User': '搜索用户',
+        'UI.Search.Unimplemented': '此功能尚未实现'
       }
     },
   },

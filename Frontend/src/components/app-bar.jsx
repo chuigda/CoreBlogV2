@@ -19,6 +19,7 @@ import InfoIcon from '@mui/icons-material/Info'
 import SyncIcon from '@mui/icons-material/Sync'
 import { styled, alpha } from '@mui/material/styles'
 import { useTranslation } from 'react-i18next'
+import { useSnackbar } from 'notistack'
 import { Link, useLocation, useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
@@ -60,6 +61,7 @@ const MainAppBar = ({ refreshIndex }) => {
   const { t } = useTranslation()
   const location = useLocation()
   const history = useHistory()
+  const { enqueueSnackbar } = useSnackbar()
   const userContext = useContext(UserContext)
   const searchBoxRef = useRef()
 
@@ -83,6 +85,7 @@ const MainAppBar = ({ refreshIndex }) => {
     }
   }
   const handleSearchMenuClose = () => setSearchMenuAnchor(null)
+  const handleSearchAction = () => enqueueSnackbar(t('UI.Search.Unimplemented'), { variant: 'info' })
 
   return (
     <AppBar position="sticky">
@@ -202,13 +205,21 @@ const MainAppBar = ({ refreshIndex }) => {
                  onClose={handleSearchMenuClose}
                  anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Button>
+            <Button onClick={handleSearchAction}>
               { t('UI.Search.Title') }
               { ': ' }
               { searchText }
             </Button>
-            <Button>{ t('UI.Search.FullText') }</Button>
-            <Button>{ t('UI.Search.User') }</Button>
+            <Button onClick={handleSearchAction}>
+              { t('UI.Search.FullText') }
+              { ': ' }
+              { searchText }
+            </Button>
+            <Button onClick={handleSearchAction}>
+              { t('UI.Search.User') }
+              { ': ' }
+              { searchText }
+            </Button>
           </div>
         </Popover>
       </Toolbar>

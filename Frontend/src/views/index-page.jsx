@@ -16,7 +16,7 @@ const IndexInner = ({ display }, ref) => {
   const [currentPage, setCurrentPage] = useState(1)
 
   const loadBlogList = () => {
-    listBlog(currentPage, 10, false).then(res => {
+    listBlog(currentPage, 50, false).then(res => {
       if (!res.success) {
         enqueueSnackbar(t(res.messageId), { variant: 'error' })
         return

@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography'
 import {
   Person, AccessTime, Edit, Visibility
 } from '@mui/icons-material'
+import MuiMarkdown from 'mui-markdown'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -34,16 +35,19 @@ const BlogCard = ({
           marginTop: 4,
           marginBottom: 4
         }}/>
-        <Typography variant="body1"
-                    component="div"
-                    sx={isPreview ? {
-                      maxHeight: 120,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis'
-                    } : {}}
-                    gutterBottom>
-          {content}
-        </Typography>
+        <div style={
+               isPreview ? {
+                 maxHeight: 120,
+                 overflow: 'hidden',
+                 textOverflow: 'ellipsis'
+               } : {}
+             }
+        >
+          <MuiMarkdown
+          >
+            {content}
+          </MuiMarkdown>
+        </div>
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 0, md: 4 }}>
           <div style={{ display: 'flex', columnGap: 4 }}>
             <Person />
