@@ -5,6 +5,7 @@ const { Schema, Types } = mongoose
 const blogSchema = new Schema({
   authorId: Types.ObjectId,
   title: String,
+  brief: String,
   content: String,
 
   createdAt: Date,

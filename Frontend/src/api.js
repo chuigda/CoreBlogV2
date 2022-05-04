@@ -7,8 +7,8 @@ export const listBlog = (page, pageSize, sortByLastUpdate) => mobius
   .params({ page, pageSize, sortByLastUpdate })
   .do()
 
-export const addBlog = ({ title, content }) => mobius
+export const addBlog = (title, brief, content) => mobius
   .post('/api/blog/add')
-  .data({ title, content })
+  .data({ title, brief, content })
   .priv(true)
   .do()

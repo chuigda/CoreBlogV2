@@ -29,6 +29,7 @@ const BlogRead = ({ enqueueSnackbar }) => {
       <BlogCard createdAt={blog.createdAt}
                 author={blog.author.userName}
                 title={blog.title}
+                brief={blog.brief}
                 lastUpdate={blog.lastUpdate}
                 commentCount={blog.commentCount}
                 isPreview={false}

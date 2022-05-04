@@ -5,14 +5,13 @@ import {
 } from '@mui/material'
 import SaveAsIcon from '@mui/icons-material/SaveAs'
 import ShareIcon from '@mui/icons-material/Share'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
 import { useTranslation } from 'react-i18next'
 
 import UserContext from './user-context'
 
 const Dial = () => {
-  const location = useLocation()
   const { user } = useContext(UserContext)
   const { t } = useTranslation()
   const { enqueueSnackbar } = useSnackbar()
@@ -37,7 +36,7 @@ const Dial = () => {
                  onClose={() => {}}
                  ariaLabel="speed dail">
         {
-          (user && location.pathname === '/') && <SpeedDialAction
+          user && <SpeedDialAction
             icon={<SaveAsIcon />}
             label="Home"
             title={t('UI.Dial.WriteBlog')}

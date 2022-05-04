@@ -14,11 +14,12 @@ const trimCommentInfo = ({ _id, author, content, replyTo, createdAt }) => ({
 })
 
 const trimBlogInfo = ({
-  _id, title, content, createdAt, lastUpdate, author, comments, commentCount
+  _id, title, brief, content, createdAt, lastUpdate, author, comments, commentCount
 }) => ({
   blogId: _id.toString(),
   author: trimUserInfo(author),
   title,
+  brief,
   content,
   createdAt,
   lastUpdate,

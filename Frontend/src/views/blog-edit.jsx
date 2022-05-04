@@ -14,14 +14,21 @@ const BlogEdit = () => {
   const { enqueueSnackbar } = useSnackbar()
   const history = useHistory()
   const titleRef = useRef()
+  const briefRef = useRef()
   const editorRef = useRef()
 
   const onClickSaveButton = () => {
     const title = titleRef.current.value
+    const brief = briefRef.current.value
     const content = editorRef.current.getValue()
 
     if (title.length === 0) {
       enqueueSnackbar(t('UI.BlogEdit.NeedTitle'), { variant: 'error' })
+      return
+    }
+
+    if (brief.length === 0) {
+      enqueueSnackbar(t('UI.BlogEdit.NeedBrief'), { variant: 'error' })
       return
     }
 
@@ -30,7 +37,7 @@ const BlogEdit = () => {
       return
     }
 
-    addBlog({ title, content }).then(res => {
+    addBlog(title, brief, content).then(res => {
       if (!res.success) {
         enqueueSnackbar(t(res.messageId), { variant: 'error' })
         return
@@ -56,11 +63,28 @@ const BlogEdit = () => {
                      }
                    }}
         />
+        <TextField size="medium"
+                   variant="outlined"
+                   multiline
+                   inputRef={briefRef}
+                   required
+                   label={t('UI.BlogEdit.BriefInput')}
+                   sx={{
+                     marginTop: '12px',
+                     width: '100%',
+                     '& .MuiInputBase-root': {
+                       borderRadius: 0
+                     }
+                   }}
+                   rows={6}
+                   maxRows={6}
+        />
         <div style={{
           marginTop: 12,
           marginBottom: 12,
           border: '1px solid #1976d2',
           width: '100%',
+          boxSizing: 'border-box'
         }}>
           <Editor height="50vh"
                   defaultLanguage="markdown"

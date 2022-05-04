@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom'
 import { prettyTime } from '../utils/prettyTime'
 
 const BlogCard = ({
-  blogId, author, title, content, commentCount, createdAt, lastUpdate, isPreview
+  blogId, author, title, brief, content, commentCount, createdAt, lastUpdate, isPreview
 }) => {
   const { t } = useTranslation()
 
@@ -25,7 +25,7 @@ const BlogCard = ({
   return (
     <Card>
       <CardContent sx={{ paddingBottom: 16 }}>
-        <Typography variant="h6"
+        <Typography variant="h5"
                     component={isPreview ? Link : 'div'}
                     sx={{ textDecoration: 'none', boxShadow: 'none' }}
                     to={isPreview ? `/blog/${blogId}` : undefined}>
@@ -35,19 +35,29 @@ const BlogCard = ({
           marginTop: 4,
           marginBottom: 4
         }}/>
-        <div style={
-               isPreview ? {
-                 maxHeight: 120,
-                 overflow: 'hidden',
-                 textOverflow: 'ellipsis'
-               } : {}
-             }
-        >
-          <MuiMarkdown
-          >
-            {content}
-          </MuiMarkdown>
-        </div>
+        {
+          brief && <div style={{ marginBottom: 14 }}>
+            <Typography variant="body1" sx={{
+              maxHeight: '6em',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}>
+              {brief}
+            </Typography>
+          </div>
+        }
+        {
+          !isPreview && <div style={{ marginBottom: 14 }}>
+            <Divider style={{
+              marginTop: 4,
+              marginBottom: 4
+            }}/>
+            <MuiMarkdown>
+              {content}
+            </MuiMarkdown>
+          </div>
+        }
+
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 0, md: 4 }}>
           <div style={{ display: 'flex', columnGap: 4 }}>
             <Person />
@@ -91,6 +101,7 @@ BlogCard.propTypes = {
   blogId: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  brief: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   commentCount: PropTypes.number.isRequired,
   createdAt: PropTypes.string.isRequired,

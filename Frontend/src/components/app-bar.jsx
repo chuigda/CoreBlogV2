@@ -170,7 +170,7 @@ const MainAppBar = ({ refreshIndex }) => {
           </MenuItem>
         </Menu>
         <Typography
-          variant="h6"
+          variant="h5"
           noWrap
           component="div"
           sx={{

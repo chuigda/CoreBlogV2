@@ -12,16 +12,17 @@ router.post('/add', privileged, async (req, res) => {
   try {
     typeAssert(req.body, {
       title: 'string',
+      brief: 'string',
       content: 'string',
     })
   } catch (e) {
     res.status(400).send()
     return
   }
-  const { title, content } = req.body
+  const { title, brief, content } = req.body
   const { userId } = req.auth
 
-  const blogId = await createBlog(userId, title, content)
+  const blogId = await createBlog(userId, title, brief, content)
   res.json({
     success: true,
     messageId: 'Blog.Add.Success',

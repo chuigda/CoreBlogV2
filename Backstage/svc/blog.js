@@ -5,10 +5,11 @@ const Comment = require('../dao/comment.js')
 
 const { Types } = mongoose
 
-const createBlog = async (authorId, title, content) => {
+const createBlog = async (authorId, title, brief, content) => {
   const blog = new Blog({
     authorId: new Types.ObjectId(authorId),
     title,
+    brief,
     content,
 
     createdAt: new Date(),
