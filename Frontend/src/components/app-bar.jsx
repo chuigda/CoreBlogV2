@@ -184,7 +184,7 @@ const MainAppBar = ({ refreshIndex }) => {
             }
           }}
         >
-          CoreBlog
+          CoreBlog V2
         </Typography>
         <div style={{ flexGrow: 1 }} />
         <Search ref={searchBoxRef}>
