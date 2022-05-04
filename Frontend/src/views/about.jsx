@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useSnackbar } from 'notistack'
 import {
-  Card, CardContent, Divider, IconButton, Typography
+  Card, CardContent, Divider, IconButton, Tooltip, Typography
 } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
+import LooksOneIcon from '@mui/icons-material/LooksOne'
 import { useTranslation } from 'react-i18next'
 
 const howVagatableIAm = String.raw`我好菜啊
@@ -107,6 +108,7 @@ const About = () => {
   }
 
   const openGitHub = () => window.open('https://github.com/chuigda/CoreBlogV2')
+  const openCoreBlogV1 = () => window.open('http://120.78.128.153/coreblog/index.php')
 
   if (counter !== 0) {
     return (
@@ -144,9 +146,16 @@ const About = () => {
             display: 'flex',
             justifyContent: 'center'
           }}>
-            <IconButton size="large" onClick={openGitHub}>
-              <GitHubIcon/>
-            </IconButton>
+            <Tooltip title="Go to GitHub">
+              <IconButton size="large" onClick={openGitHub}>
+                <GitHubIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Visit CoreBlog V1 site">
+              <IconButton size="large" onClick={openCoreBlogV1}>
+                <LooksOneIcon />
+              </IconButton>
+            </Tooltip>
           </div>
           <div style={{
             position: 'absolute',
