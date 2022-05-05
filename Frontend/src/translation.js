@@ -27,9 +27,9 @@ const translation = {
         'Comment.Delete.Success': 'Successfully deleted comment',
         'Server.InternalError': 'Server error, please try again later',
 
-        'UI.Format.Time': 'HH:MM',
-        'UI.Format.DateTime': 'D/M HH:MM',
-        'UI.Format.YearDateTime': 'M/D/YYYY HH:MM',
+        'UI.Format.Time': 'HH:mm',
+        'UI.Format.DateTime': 'D/M HH:mm',
+        'UI.Format.YearDateTime': 'M/D/YYYY HH:mm',
 
         'UI.AppBar.Search': 'Search...',
         'UI.MainMenu.SetLanguage': 'Choose language',
@@ -105,9 +105,9 @@ const translation = {
         'Comment.Delete.Success': '删除评论成功',
         'Server.InternalError': '服务器遇到问题，请稍候再试',
 
-        'UI.Format.Time': 'HH:MM',
-        'UI.Format.DateTime': 'M 月 D 日 HH:MM',
-        'UI.Format.YearDateTime': 'YYYY 年 M 月 D 日 HH:MM',
+        'UI.Format.Time': 'HH:mm',
+        'UI.Format.DateTime': 'M 月 D 日 HH:mm',
+        'UI.Format.YearDateTime': 'YYYY 年 M 月 D 日 HH:mm',
 
         'UI.AppBar.Search': '搜索...',
         'UI.MainMenu.SetLanguage': '选择语言',
