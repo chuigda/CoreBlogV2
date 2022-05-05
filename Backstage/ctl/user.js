@@ -72,6 +72,7 @@ router.post('/login', async (req, res) => {
       success: false,
       messageId: 'User.Login.NotFound'
     })
+    return
   }
 
   const accessToken = await makeAccessToken(user._id)
