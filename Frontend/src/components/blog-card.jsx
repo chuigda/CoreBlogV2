@@ -37,11 +37,11 @@ const BlogCard = ({
         }}/>
         {
           brief && <div style={{ marginBottom: 14 }}>
-            <Typography variant="body1" sx={{
+            <Typography variant="body1" sx={isPreview ? {
               maxHeight: '6em',
               overflow: 'hidden',
               textOverflow: 'ellipsis'
-            }}>
+            } : {}}>
               {brief}
             </Typography>
           </div>
