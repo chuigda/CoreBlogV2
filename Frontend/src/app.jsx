@@ -37,7 +37,7 @@ const App = () => {
           alignItems: 'center',
           paddingLeft: 20,
           paddingRight: 20,
-          overflowY: 'scroll',
+          overflowY: 'auto',
           overflowX: 'hidden'
         }}>
           <div style={{

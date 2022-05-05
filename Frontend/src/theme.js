@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles'
 const theme = createTheme({
   typography: {
     fontFamily: [
-      '\'Noto Serif\'',
+      '\'Noto Serif SC\'',
       '\'Liberation Serif\'',
       'SimSun',
       'serif'

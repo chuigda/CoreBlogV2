@@ -7,11 +7,11 @@ import FormControl from '@mui/material/FormControl'
 import { CardContent, Divider, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
-import { getLocalStorage, setLocalStorage } from '../utils/localStorage'
+import { setLocalStorage } from '../utils/localStorage'
 
 const Language = () => {
   const { t, i18n } = useTranslation()
-  const language = getLocalStorage('UI.Language') || 'zh_CN'
+  const { language } = i18n
 
   const changeLanguage = e => {
     const lang = e.target.value
