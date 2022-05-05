@@ -27,7 +27,7 @@ const BlogRead = ({ enqueueSnackbar }) => {
   const blogCard = useMemo(() => (blog
     ? (
       <BlogCard createdAt={blog.createdAt}
-                author={blog.author.userName}
+                author={blog.author.nickName}
                 title={blog.title}
                 brief={blog.brief}
                 lastUpdate={blog.lastUpdate}
