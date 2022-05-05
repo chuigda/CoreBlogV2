@@ -62,7 +62,7 @@ const BlogCard = ({
           </div>
         }
         {
-          !isPreview && <div style={{ marginBottom: 14 }}>
+          !isPreview && <div style={{ marginBottom: 14 }} className="blog-content">
             <Divider style={{
               marginTop: 4,
               marginBottom: 4
