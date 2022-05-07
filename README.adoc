@@ -1,0 +1,43 @@
+= CoreBlogV2
+author: Chuigda <icey@icey.tech>
+
+This is the second version of CoreBlog. You may access the example site link:http://47.104.77.222[here].
+
+You may access the CoreBlogV1 site link:http://120.78.128.153/coreblog/index.php[here].
+
+== Special notes
+Though programmed with code quality and best practice in mind, this blog project may be too simple to satisfy one's need, and may be to difficult to deploy for freshmen (especially if you don't have experience of playing with HTTP, Linux, nginx or so). If you're looking for a full-featured, battery-included blog system, I suggest using link:https://github.com/YunYouJun/valaxy[valaxy] or link:https://hexo.io[hexo] (you can find a good hexo theme link:https://github.com/YunYouJun/hexo-theme-yun[here]) instead.
+
+If you really like the style of the blog, or you'd like to learn something from it, then get on reading.
+
+== Start the project locally
+* Make sure both Redis and MongoDB are installed and running
+** CoreBlogV2 will try `127.0.0.1:6379` for Redis and `127.0.0.1:27017` for MongoDB
+** If you'd like to use different options, you may modify `Backstage/config/config.dev.js`
+* Clone the project
+* `npm install` in both `Backstage` and `Frontend` directories
+* In `Backstage` directory, run `node index.js`
+* In `Frontend` directory, run `npm run dev`
+* Access the site at `127.0.0.1:3000`
+
+== Creating a testing user
+By this time there is no way to create user from frontend. You'll need a HTTP "debugging" tool to create user for you.
+
+[source,http]
+----
+POST /api/user/createUserAdmin HTTP/1.1
+Content-Type: application/json
+
+{
+  "authToken": "your auth token filled in your configuration",
+  "userName": "...",
+  "nickName": "...",
+  "password": "...",
+  "email": "..."
+}
+----
+
+Then you may login with your user name and password.
+
+== Deployment
+Too lazy to write... it should be trivial if you can understand the "create the testing user". PRs welecome.
