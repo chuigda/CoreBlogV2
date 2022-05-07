@@ -1,12 +1,12 @@
 = CoreBlogV2
 author: Chuigda <icey@icey.tech>
 
-This is the second version of CoreBlog. You may access the example site link:47.104.77.222[here].
+This is the second version of CoreBlog. You may access the example site link:http://47.104.77.222[here].
 
-You may access the CoreBlogV1 site link:120.78.128.153/coreblog/index.php[here].
+You may access the CoreBlogV1 site link:http://120.78.128.153/coreblog/index.php[here].
 
 == Special notes
-Though programmed with code quality and best practice in mind, this blog project may be too simple to satisfy one's need, and may be to difficult to deploy for freshmen (especially if you don't have experience of playing with HTTP, Linux, nginx or so). If you're looking for a full-featured, battery-included blog system, I suggest using link:github.com/YunYouJun/valaxy[valaxy] or link:hexo.io[hexo] (you can find a good hexo theme link:https://github.com/YunYouJun/hexo-theme-yun[here]) instead.
+Though programmed with code quality and best practice in mind, this blog project may be too simple to satisfy one's need, and may be to difficult to deploy for freshmen (especially if you don't have experience of playing with HTTP, Linux, nginx or so). If you're looking for a full-featured, battery-included blog system, I suggest using link:https://github.com/YunYouJun/valaxy[valaxy] or link:https://hexo.io[hexo] (you can find a good hexo theme link:https://github.com/YunYouJun/hexo-theme-yun[here]) instead.
 
 If you really like the style of the blog, or you'd like to learn something from it, then get on reading.
 
