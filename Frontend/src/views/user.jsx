@@ -183,7 +183,7 @@ const User = () => {
           <XDivider />
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'minmax(100px, 1fr) 3fr 32px',
+            gridTemplateColumns: 'minmax(100px, 1fr) minmax(0, 300px) 32px',
             gridTemplateRows: '32px 32px 32px',
             columnGap: 4,
           }}>
@@ -203,6 +203,7 @@ const User = () => {
                 ? <Input placeholder={ t('UI.User.NickName') }
                          defaultValue={ userContext.user.nickName }
                          inputRef={ nickNameEditRef }
+                         sx={{ padding: 0, margin: 0 }}
                   />
                 : <Typography component="span" sx={spanNoLineBreak}>
                     { userContext.user.nickName }
@@ -226,6 +227,7 @@ const User = () => {
                 ? <Input placeholder={ t('UI.User.Email') }
                          defaultValue={ userContext.user.email }
                          inputRef={ emailEditRef }
+                         sx={{ padding: 0, margin: 0, width: '100%' }}
                 />
                 : <Typography component="span" sx={spanNoLineBreak}>
                     { userContext.user.email }
