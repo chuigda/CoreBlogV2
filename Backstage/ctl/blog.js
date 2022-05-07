@@ -1,44 +1,37 @@
 const express = require('express')
 
-const { typeAssert } = require('../util/type-assert.cjs')
-const { intString, boolString, objectId } = require('../util/assertions.js')
+const { intString, boolString, objectId, nonEmtpyString } = require('../util/assertions.js')
 const { privileged } = require('../auth.js')
 const { createBlog, countBlog, getBlog, listBlog, updateBlog, deleteBlog } = require('../svc/blog.js')
 const { trimBlogInfo } = require('../svc/trim.js')
+const { verifyBody, verifyQuery } = require('../util/verify.js')
 
 const router = express.Router()
 
-router.post('/add', privileged, async (req, res) => {
-  try {
-    typeAssert(req.body, {
-      title: 'string',
-      brief: 'string',
-      content: 'string',
+router.post(
+  '/add',
+  privileged,
+  verifyBody({
+    title: nonEmtpyString,
+    brief: nonEmtpyString,
+    content: nonEmtpyString,
+  }),
+  async (req, res) => {
+    const { title, brief, content } = req.body
+    const { userId } = req.auth
+
+    const blogId = await createBlog(userId, title, brief, content)
+    res.json({
+      success: true,
+      messageId: 'Blog.Add.Success',
+      data: {
+        blogId
+      }
     })
-  } catch (e) {
-    res.status(400).send()
-    return
   }
-  const { title, brief, content } = req.body
-  const { userId } = req.auth
+)
 
-  const blogId = await createBlog(userId, title, brief, content)
-  res.json({
-    success: true,
-    messageId: 'Blog.Add.Success',
-    data: {
-      blogId
-    }
-  })
-})
-
-router.get('/get', async (req, res) => {
-  try {
-    typeAssert(req.query, { blogId: objectId })
-  } catch (e) {
-    res.status(400).send()
-    return
-  }
+router.get('/get', verifyQuery({ blogId: objectId }), async (req, res) => {
   const { blogId } = req.query
 
   const blog = await getBlog(blogId)
@@ -56,64 +49,54 @@ router.get('/get', async (req, res) => {
   }
 })
 
-router.get('/list', async (req, res) => {
-  try {
-    typeAssert(req.query, {
-      page: intString.chainWith(x => parseInt(x, 10) >= 1),
-      pageSize: intString.chainWith(x => parseInt(x, 10) >= 1),
-      sortByLastUpdate: boolString
+router.get(
+  '/list',
+  verifyQuery({
+    page: intString.chainWith(x => parseInt(x, 10) >= 1),
+    pageSize: intString.chainWith(x => parseInt(x, 10) >= 1),
+    sortByLastUpdate: boolString
+  }),
+  async (req, res) => {
+    const { page: pageStr, pageSize: pageSizeStr, sortByLastUpdate } = req.query
+
+    const blogs = await listBlog(
+      parseInt(pageStr, 10),
+      parseInt(pageSizeStr, 10),
+      sortByLastUpdate === 'true'
+    )
+    const totalCount = await countBlog()
+
+    res.json({
+      success: true,
+      messageId: 'Blog.List.Success',
+      data: {
+        blogs: blogs.map(trimBlogInfo),
+        totalCount
+      }
     })
-  } catch (e) {
-    res.status(400).send()
-    return
   }
-  const { page: pageStr, pageSize: pageSizeStr, sortByLastUpdate } = req.query
+)
 
-  const blogs = await listBlog(
-    parseInt(pageStr, 10),
-    parseInt(pageSizeStr, 10),
-    sortByLastUpdate === 'true'
-  )
-  const totalCount = await countBlog()
+router.post(
+  '/update',
+  privileged,
+  verifyBody({
+    blogId: objectId,
+    newContent: nonEmtpyString
+  }),
+  async (req, res) => {
+    const { blogId, newContent } = req.body
+    const { userId } = req.auth
 
-  res.json({
-    success: true,
-    messageId: 'Blog.List.Success',
-    data: {
-      blogs: blogs.map(trimBlogInfo),
-      totalCount
-    }
-  })
-})
-
-router.post('/update', privileged, async (req, res) => {
-  try {
-    typeAssert(req.body, {
-      blogId: objectId,
-      newContent: 'string'
+    const result = await updateBlog(blogId, userId, newContent)
+    res.json({
+      success: result === 'Success',
+      messageId: `Blog.Update.${result}`
     })
-  } catch (e) {
-    res.status(400).send()
-    return
   }
-  const { blogId, newContent } = req.body
-  const { userId } = req.auth
+)
 
-  const result = await updateBlog(blogId, userId, newContent)
-  res.json({
-    success: result === 'Success',
-    messageId: `Blog.Update.${result}`
-  })
-})
-
-router.post('/delete', privileged, async (req, res) => {
-  try {
-    typeAssert(req.body, { blogId: objectId })
-  } catch (e) {
-    res.status(400).send()
-    return
-  }
-
+router.post('/delete', privileged, verifyBody({ blogId: objectId }), async (req, res) => {
   const { blogId } = req.body
   const { userId } = req.auth
 
