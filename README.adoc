@@ -25,7 +25,7 @@ By this time there is no way to create user from frontend. You'll need a HTTP "d
 
 [source,http]
 ----
-POST base_url/api/user/createUserAdmin
+POST /api/user/createUserAdmin HTTP/1.1
 Content-Type: application/json
 
 {
