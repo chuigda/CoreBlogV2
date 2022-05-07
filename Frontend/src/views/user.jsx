@@ -29,6 +29,13 @@ import { purgeCreds } from '../utils/credUtil'
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
 const emailRegex = /^[^@]+@[^@]+\.[^@]+$/
 
+const spanNoLineBreak = {
+  display: 'inline',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap'
+}
+
 const User = () => {
   const userContext = useContext(UserContext)
   const { t } = useTranslation()
@@ -180,10 +187,10 @@ const User = () => {
             gridTemplateRows: '32px 32px 32px',
             columnGap: 4,
           }}>
-            <Typography component="span">
+            <Typography variant="body1" component="span">
               { t('UI.User.UserName') }
             </Typography>
-            <Typography component="span" style={{ display: 'inline', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <Typography variant="body1" component="span" sx={spanNoLineBreak}>
               { userContext.user.userName }
             </Typography>
             <div/>
@@ -197,7 +204,9 @@ const User = () => {
                          defaultValue={ userContext.user.nickName }
                          inputRef={ nickNameEditRef }
                   />
-                : <Typography component="span">{ userContext.user.nickName }</Typography>
+                : <Typography component="span" sx={spanNoLineBreak}>
+                    { userContext.user.nickName }
+                  </Typography>
             }
             {
               editNickName
@@ -218,7 +227,9 @@ const User = () => {
                          defaultValue={ userContext.user.email }
                          inputRef={ emailEditRef }
                 />
-                : <Typography component="span">{ userContext.user.email }</Typography>
+                : <Typography component="span" sx={spanNoLineBreak}>
+                    { userContext.user.email }
+                  </Typography>
             }
             {
               editEmail
