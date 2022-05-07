@@ -11,7 +11,8 @@ import {
   Typography,
   Divider,
   Input,
-  IconButton
+  IconButton,
+  TextField
 } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import SaveIcon from '@mui/icons-material/Save'
@@ -136,6 +137,35 @@ const User = () => {
     history.replace('/')
   }
 
+  const passwordEditRef = useRef()
+  const confirmPasswordEditRef = useRef()
+  const [openChangePassword, setOpenChangePassword] = useState(false)
+  const closeChangePassword = () => setOpenChangePassword(false)
+  const openChangePasswordDialog = () => setOpenChangePassword(true)
+  const confirmChangePassword = () => {
+    const password = passwordEditRef.current.value
+    const confirmPassword = confirmPasswordEditRef.current.value
+
+    if (password !== confirmPassword) {
+      enqueueSnackbar(t('UI.User.UnequalPassword'), { variant: 'error' })
+      return
+    }
+
+    if (!passwordRegex.test(password)) {
+      enqueueSnackbar(t('UI.User.BadPassword'), { variant: 'error' })
+      return
+    }
+
+    mobius.post('/api/user/changePassword')
+      .data({ password })
+      .priv(true)
+      .do()
+      .then(({ success, messageId }) => {
+        setOpenChangePassword(false)
+        enqueueSnackbar(t(messageId), { variant: success ? 'success' : 'error' })
+      })
+  }
+
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <Card style={{ maxWidth: 600 }}>
@@ -146,14 +176,14 @@ const User = () => {
           <XDivider />
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'minmax(200px, 1fr) 3fr 40px',
+            gridTemplateColumns: 'minmax(100px, 1fr) 3fr 32px',
             gridTemplateRows: '32px 32px 32px',
             columnGap: 4,
           }}>
             <Typography component="span">
               { t('UI.User.UserName') }
             </Typography>
-            <Typography component="span">
+            <Typography component="span" style={{ display: 'inline', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               { userContext.user.userName }
             </Typography>
             <div/>
@@ -202,7 +232,7 @@ const User = () => {
           </div>
           <Divider style={{ marginTop: 12, marginBottom: 12 }} />
           <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-            <Button variant="contained">
+            <Button variant="contained" onClick={openChangePasswordDialog}>
               { t('UI.User.ChangePassword') }
             </Button>
             <Button variant="contained" color="error" onClick={openLogoutDialog}>
@@ -211,11 +241,41 @@ const User = () => {
           </div>
         </CardContent>
       </Card>
+
       <Dialog open={openLogout} onClose={closeLogout}>
         <DialogTitle>{ t('UI.User.ConfirmLogout.Title') }</DialogTitle>
         <DialogActions>
           <Button onClick={closeLogout}>{ t('UI.Dialog.Cancel') }</Button>
           <Button onClick={confirmLogout}>{ t('UI.Dialog.Ok') }</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={openChangePassword}>
+        <DialogTitle>{ t('UI.User.ChangePassword') }</DialogTitle>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography component="span">
+            { t('UI.User.PasswordRequirement') }
+          </Typography>
+          <TextField inputRef={passwordEditRef}
+                     inputProps={{ autoComplete: 'new-password' }}
+                     type="password"
+                     margin="dense"
+                     variant="standard"
+                     label={ t('UI.User.Password') }
+                     sx={{ maxWidth: '320px' }}
+          />
+          <TextField inputRef={confirmPasswordEditRef}
+                     inputProps={{ autoComplete: 'new-password' }}
+                     type="password"
+                     margin="dense"
+                     variant="standard"
+                     label={ t('UI.User.ConfirmPassword') }
+                     sx={{ maxWidth: '320px' }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeChangePassword}>{ t('UI.Dialog.Cancel') }</Button>
+          <Button onClick={confirmChangePassword}>{ t('UI.Dialog.Ok') }</Button>
         </DialogActions>
       </Dialog>
     </div>
