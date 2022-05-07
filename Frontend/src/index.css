@@ -31,3 +31,32 @@
 .icon-node-js:before {
     content: "\ec12";
 }
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #1976d2 #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #1976d2;
+    border-radius: 4px;
+    border: 2px solid #ffffff;
+}
+
+.blog-content .MuiPaper-root {
+    box-shadow: none;
+    background-color: rgb(240, 240, 240);
+    color: rgb(64, 64, 64);
+    border-left-color: rgb(187, 187, 187);
+    border-radius: 0;
+    padding: 0.5em 0.5em 0.5em 2ch;
+}

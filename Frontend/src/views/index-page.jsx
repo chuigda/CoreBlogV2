@@ -35,7 +35,7 @@ const IndexInner = ({ display }, ref) => {
 
   const blogComponents = useMemo(() => blogList.map((x, idx) => (
     <BlogCard blogId={x.blogId}
-              author={x.author.userName}
+              author={x.author.nickName}
               brief={x.brief}
               createdAt={x.createdAt}
               commentCount={x.commentCount}

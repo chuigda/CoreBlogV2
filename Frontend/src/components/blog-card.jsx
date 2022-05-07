@@ -27,7 +27,22 @@ const BlogCard = ({
       <CardContent sx={{ paddingBottom: 16 }}>
         <Typography variant="h5"
                     component={isPreview ? Link : 'div'}
-                    sx={{ textDecoration: 'none', boxShadow: 'none' }}
+                    sx={{
+                      textDecoration: 'none',
+                      boxShadow: 'none',
+                      ...(isPreview ? {
+                        color: '#1976d2',
+                        ':visited': {
+                          color: '#1976d2'
+                        },
+                        ':hover': {
+                          color: '#42a5f5'
+                        },
+                        ':visited:hover': {
+                          color: '#42a5f5'
+                        }
+                      } : {})
+                    }}
                     to={isPreview ? `/blog/${blogId}` : undefined}>
           {title}
         </Typography>
@@ -47,7 +62,7 @@ const BlogCard = ({
           </div>
         }
         {
-          !isPreview && <div style={{ marginBottom: 14 }}>
+          !isPreview && <div style={{ marginBottom: 14 }} className="blog-content">
             <Divider style={{
               marginTop: 4,
               marginBottom: 4
