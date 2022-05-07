@@ -75,7 +75,7 @@ router.post(
   verifyBody({ nickName: nonEmtpyString }),
   async (req, res) => {
     const { nickName } = req.body
-    const { userId } = req.user
+    const { userId } = req.auth
 
     if (await editUserNickname(userId, nickName)) {
       res.json({
@@ -94,10 +94,10 @@ router.post(
 router.post(
   '/changeEmail',
   privileged,
-  verifyBody({ email: nonEmtpyString }),
+  verifyBody({ email: emailString }),
   async (req, res) => {
     const { email } = req.body
-    const { userId } = req.user
+    const { userId } = req.auth
 
     if (await editUserEmail(userId, email)) {
       res.json({
@@ -119,7 +119,7 @@ router.post(
   verifyBody({ password: passwordString }),
   async (req, res) => {
     const { password } = req.body
-    const { userId } = req.user
+    const { userId } = req.auth
 
     if (await editUserPassword(userId, password)) {
       res.json({

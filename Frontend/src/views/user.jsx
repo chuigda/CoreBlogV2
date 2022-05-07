@@ -17,14 +17,22 @@ import EditIcon from '@mui/icons-material/Edit'
 import SaveIcon from '@mui/icons-material/Save'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
+import { useSnackbar } from 'notistack'
 
 import XDivider from '../components/divider.jsx'
 import UserContext from '../components/user-context'
+import { mobius } from '../utils/mobius'
+import { setLocalStorage } from '../utils/localStorage'
+import { purgeCreds } from '../utils/credUtil'
+
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+const emailRegex = /^[^@]+@[^@]+\.[^@]+$/
 
 const User = () => {
   const userContext = useContext(UserContext)
   const { t } = useTranslation()
   const history = useHistory()
+  const { enqueueSnackbar } = useSnackbar()
 
   const back = () => history.goBack()
   const toLogin = () => history.replace('/login')
@@ -60,16 +68,72 @@ const User = () => {
 
   const startEditNickName = () => setEditNickName(true)
   const doneEditNickName = () => {
-    setEditNickName(false)
+    const nickName = nickNameEditRef.current.value
+    if (nickName === userContext.user.nickName) {
+      setEditNickName(false)
+      return
+    }
 
-    // TODO
+    if (nickName.length === 0) {
+      enqueueSnackbar(t('UI.User.BadNickName'), { variant: 'error' })
+      return
+    }
+
+    mobius.post('/api/user/changeNickName')
+      .data({ nickName })
+      .priv(true)
+      .do()
+      .then(({ success, messageId }) => {
+        setEditNickName(false)
+        enqueueSnackbar(t(messageId), { variant: success ? 'success' : 'error' })
+
+        if (success) {
+          const newUserInfo = { ...userContext.user, nickName }
+          userContext.setUser(newUserInfo)
+          setLocalStorage('User.Info', JSON.stringify(newUserInfo))
+        }
+      })
   }
 
   const startEditEmail = () => setEditEmail(true)
   const doneEditEmail = () => {
-    setEditEmail(false)
+    const email = emailEditRef.current.value
+    if (email === userContext.user.email) {
+      setEditEmail(false)
+      return
+    }
 
-    // TODO
+    if (!emailRegex.test(email)) {
+      enqueueSnackbar(t('UI.User.BadEmail'), { variant: 'error' })
+      return
+    }
+
+    mobius.post('/api/user/changeEmail')
+      .data({ email })
+      .priv(true)
+      .do()
+      .then(({ success, messageId }) => {
+        setEditEmail(false)
+        enqueueSnackbar(t(messageId), { variant: success ? 'success' : 'error' })
+
+        if (success) {
+          const newUserInfo = { ...userContext.user, email }
+          userContext.setUser(newUserInfo)
+          setLocalStorage('User.Info', JSON.stringify(newUserInfo))
+        }
+      })
+  }
+
+  const [openLogout, setOpenLogout] = useState(false)
+  const closeLogout = () => setOpenLogout(false)
+  const openLogoutDialog = () => setOpenLogout(true)
+  const confirmLogout = () => {
+    enqueueSnackbar(t('UI.User.LogoutSuccess'), { variant: 'success' })
+
+    setLocalStorage('User.Info', null)
+    purgeCreds()
+    userContext.setUser(null)
+    history.replace('/')
   }
 
   return (
@@ -138,11 +202,22 @@ const User = () => {
           </div>
           <Divider style={{ marginTop: 12, marginBottom: 12 }} />
           <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-            <Button variant="contained">修改密码</Button>
-            <Button variant="contained" color="error">注销登录</Button>
+            <Button variant="contained">
+              { t('UI.User.ChangePassword') }
+            </Button>
+            <Button variant="contained" color="error" onClick={openLogoutDialog}>
+              { t('UI.User.Logout') }
+            </Button>
           </div>
         </CardContent>
       </Card>
+      <Dialog open={openLogout} onClose={closeLogout}>
+        <DialogTitle>{ t('UI.User.ConfirmLogout.Title') }</DialogTitle>
+        <DialogActions>
+          <Button onClick={closeLogout}>{ t('UI.Dialog.Cancel') }</Button>
+          <Button onClick={confirmLogout}>{ t('UI.Dialog.Ok') }</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 }
