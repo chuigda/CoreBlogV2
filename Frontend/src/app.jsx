@@ -5,13 +5,14 @@ import {
 import { Button } from '@mui/material'
 import MainAppBar from './components/app-bar.jsx'
 import Dial from './components/dial.jsx'
+import UserContext from './components/user-context'
 import Language from './views/language.jsx'
 import Login from './views/login.jsx'
 import Index from './views/index-page.jsx'
 import BlogRead from './views/blog-read.jsx'
 import About from './views/about.jsx'
 import BlogEdit from './views/blog-edit.jsx'
-import UserContext from './components/user-context'
+import User from './views/user.jsx'
 import { getLocalStorage } from './utils/localStorage'
 
 const initUserInfo = JSON.parse(getLocalStorage('User.Info'))
@@ -48,6 +49,9 @@ const App = () => {
           }}>
             { <Index ref={indexPageRef} display={matchIndex} /> }
             <Switch>
+              <Route exact path="/user">
+                <User />
+              </Route>
               <Route exact path="/blog/:blogId">
                 <BlogRead />
               </Route>

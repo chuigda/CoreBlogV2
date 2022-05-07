@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { useSnackbar } from 'notistack'
 import {
-  Card, CardContent, Divider, IconButton, Tooltip, Typography
+  Card, CardContent, IconButton, Tooltip, Typography
 } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import LooksOneIcon from '@mui/icons-material/LooksOne'
 import { useTranslation } from 'react-i18next'
+import XDivider from '../components/divider.jsx'
 
 const howVagatableIAm = String.raw`我好菜啊
 我菜爆了
@@ -115,10 +116,7 @@ const About = () => {
       <Card>
         <CardContent sx={{ position: 'relative' }}>
           <Typography variant="h6">{t('UI.About.Title')}</Typography>
-          <Divider style={{
-            marginTop: 4,
-            marginBottom: 4
-          }}/>
+          <XDivider />
           <Typography variant="body1">{t('UI.About.Content')}</Typography>
           <Typography variant="body1">
             {t('UI.About.Skills')}
@@ -173,7 +171,7 @@ const About = () => {
       <Card>
         <CardContent>
           <Typography variant="h6">{t('UI.About.Title')}</Typography>
-          <Divider style={{ marginTop: 4, marginBottom: 4 }} />
+          <XDivider />
           <Typography variant="body1">
             {
               itemList.map((item, index) => (

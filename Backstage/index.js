@@ -12,6 +12,8 @@ const config = require('./config')
 
 enableChainAPI()
 
+process.on('uncaughtException', err => console.error('uncaught exception:', err))
+
 const app = express()
 const { port } = config
 

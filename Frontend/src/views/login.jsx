@@ -10,6 +10,7 @@ import { mobius } from '../utils/mobius'
 import { saveCreds } from '../utils/credUtil'
 import UserContext from '../components/user-context'
 import { setLocalStorage } from '../utils/localStorage'
+import XDivider from '../components/divider'
 
 const Login = () => {
   const { t } = useTranslation()
@@ -54,7 +55,7 @@ const Login = () => {
           <Typography variant="h6">
             { t('UI.Login.Title') }
           </Typography>
-          <Divider style={{ marginTop: '4px', marginBottom: '12px' }} />
+          <XDivider style={{ marginBottom: 12 }} />
           <TextField
             label={ t('UI.Login.Username') }
             variant="standard"

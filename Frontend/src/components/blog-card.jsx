@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
-  Stack, Card, CardContent, Divider
+  Stack, Card, CardContent
 } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import {
@@ -11,6 +11,7 @@ import MuiMarkdown from 'mui-markdown'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
+import XDivider from './divider.jsx'
 import { prettyTime } from '../utils/prettyTime'
 
 const BlogCard = ({
@@ -46,10 +47,7 @@ const BlogCard = ({
                     to={isPreview ? `/blog/${blogId}` : undefined}>
           {title}
         </Typography>
-        <Divider style={{
-          marginTop: 4,
-          marginBottom: 4
-        }}/>
+        <XDivider />
         {
           brief && <div style={{ marginBottom: 14 }}>
             <Typography variant="body1" sx={isPreview ? {
@@ -63,10 +61,7 @@ const BlogCard = ({
         }
         {
           !isPreview && <div style={{ marginBottom: 14 }} className="blog-content">
-            <Divider style={{
-              marginTop: 4,
-              marginBottom: 4
-            }}/>
+            <XDivider />
             <MuiMarkdown>
               {content}
             </MuiMarkdown>

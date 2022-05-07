@@ -4,9 +4,10 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
-import { CardContent, Divider, Typography } from '@mui/material'
+import { CardContent, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 
+import XDivider from '../components/divider.jsx'
 import { setLocalStorage } from '../utils/localStorage'
 
 const Language = () => {
@@ -26,14 +27,14 @@ const Language = () => {
           <Typography variant="h6">
             { t('UI.MainMenu.SetLanguage') }
           </Typography>
-          <Divider style={{ marginTop: '4px', marginBottom: '12px' }} />
+          <XDivider />
           <FormControl>
             <RadioGroup defaultValue={language} onChange={changeLanguage}>
               <FormControlLabel control={<Radio />} label="简体中文" value="zh_CN" />
               <FormControlLabel control={<Radio />} label="English" value="en" />
             </RadioGroup>
           </FormControl>
-          <Divider style={{ marginTop: '4px', marginBottom: '12px' }} />
+          <XDivider />
           <Typography variant="body1">
             { t('UI.SetLanguage.Sample') }
           </Typography>

@@ -1,30 +1,26 @@
 const express = require('express')
 
-const { createUser, findUser, userLogin } = require('../svc/user.js')
+const {
+  createUser, findUser, userLogin, editUserNickname, editUserEmail, editUserPassword
+} = require('../svc/user.js')
 const { makeAccessToken } = require('../auth.js')
 const { trimUserInfo } = require('../svc/trim.js')
-const { typeAssert } = require('../util/type-assert.cjs')
+const { verifyBody, verifyQuery } = require('../util/verify.js')
 const config = require('../config')
+const { privileged } = require('../auth')
+const { nonEmtpyString, emailString, passwordString } = require('../util/assertions.js')
 
 const router = express.Router()
 
-router.post('/createUserAdmin', async (req, res) => {
-  try {
-    typeAssert(req.body, {
-      authToken: 'string'.assertValue(config.authToken),
-      userName: 'string',
-      nickName: 'string',
-      password: 'string',
-      email: 'string'
-    })
-  } catch (typeAssertError) {
-    res.send({
-      success: false,
-      messageId: 'User.CreateByAdmin.BadToken'
-    })
-    return
-  }
+const createUserAssertion = {
+  authToken: 'string'.assertValue(config.authToken),
+  userName: nonEmtpyString,
+  nickName: nonEmtpyString,
+  password: passwordString,
+  email: emailString
+}
 
+router.post('/createUserAdmin', verifyBody(createUserAssertion), async (req, res) => {
   const { userName, nickName, password, email } = req.body
   await createUser(userName, nickName, password, email)
 
@@ -34,14 +30,7 @@ router.post('/createUserAdmin', async (req, res) => {
   })
 })
 
-router.get('/info', async (req, res) => {
-  try {
-    typeAssert(req.query, { userName: 'string' })
-  } catch (e) {
-    res.status(400).send()
-    return
-  }
-
+router.get('/info', verifyQuery({ userName: 'string' }), async (req, res) => {
   const user = await findUser(req.query.userName)
   if (!user) {
     res.json({
@@ -57,13 +46,7 @@ router.get('/info', async (req, res) => {
   })
 })
 
-router.post('/login', async (req, res) => {
-  try {
-    typeAssert(req.body, { userName: 'string', password: 'string' })
-  } catch (e) {
-    res.status(400).send()
-    return
-  }
+router.post('/login', verifyBody({ userName: 'string', password: 'string' }), async (req, res) => {
   const { userName, password } = req.body
 
   const user = await userLogin(userName, password)
@@ -85,5 +68,71 @@ router.post('/login', async (req, res) => {
     }
   })
 })
+
+router.post(
+  '/changeNickName',
+  privileged,
+  verifyBody({ nickName: nonEmtpyString }),
+  async (req, res) => {
+    const { nickName } = req.body
+    const { userId } = req.user
+
+    if (await editUserNickname(userId, nickName)) {
+      res.json({
+        success: true,
+        messageId: 'User.Edit.Success'
+      })
+    } else {
+      res.json({
+        success: false,
+        messageId: 'User.Edit.Failed'
+      })
+    }
+  }
+)
+
+router.post(
+  '/changeEmail',
+  privileged,
+  verifyBody({ email: nonEmtpyString }),
+  async (req, res) => {
+    const { email } = req.body
+    const { userId } = req.user
+
+    if (await editUserEmail(userId, email)) {
+      res.json({
+        success: true,
+        messageId: 'User.Edit.Success'
+      })
+    } else {
+      res.json({
+        success: false,
+        messageId: 'User.Edit.Failed'
+      })
+    }
+  }
+)
+
+router.post(
+  '/changePassword',
+  privileged,
+  verifyBody({ password: passwordString }),
+  async (req, res) => {
+    const { password } = req.body
+    const { userId } = req.user
+
+    if (await editUserPassword(userId, password)) {
+      res.json({
+        success: true,
+        messageId: 'User.Edit.Success'
+      })
+    } else {
+      res.json({
+        success: false,
+        messageId: 'User.Edit.Failed'
+      })
+    }
+  }
+)
 
 module.exports = router

@@ -1,5 +1,6 @@
 const md5 = require('md5')
 const uuid = require('uuid').v4
+const { Types } = require('mongoose')
 
 const User = require('../dao/user.js')
 
@@ -36,8 +37,46 @@ const userLogin = async (userName, password) => {
   return user
 }
 
+const editUserNickname = async (userId, nickName) => {
+  const user = await User.findOne({ _id: new Types.ObjectId(userId) })
+  if (!user) {
+    return false
+  }
+
+  user.nickName = nickName
+  await user.save()
+  return true
+}
+
+const editUserEmail = async (userId, email) => {
+  const user = await User.findOne({ _id: new Types.ObjectId(userId) })
+  if (!user) {
+    return false
+  }
+
+  user.email = email
+  await user.save()
+  return true
+}
+
+const editUserPassword = async (userId, password) => {
+  const user = await User.findOne({ _id: new Types.ObjectId(userId) })
+  if (!user) {
+    return false
+  }
+
+  const hashSalt = uuid()
+  user.passwordHash = hashPassword(user.userName, password, hashSalt)
+  user.hashSalt = hashSalt
+  await user.save()
+  return true
+}
+
 module.exports = {
   createUser,
   findUser,
-  userLogin
+  userLogin,
+  editUserNickname,
+  editUserEmail,
+  editUserPassword
 }
