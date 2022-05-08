@@ -16,10 +16,11 @@ const IndexInner = ({ display }, ref) => {
   const { t } = useTranslation()
   const [blogList, setBlogList] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
+  const [hasMoreContent, setHasMoreContent] = useState(false)
   const containerContext = useContext(ContainerContext)
 
   const loadBlogList = () => {
-    listBlog(currentPage, 50, false).then(res => {
+    listBlog(currentPage, 10, false).then(res => {
       if (!res.success) {
         enqueueSnackbar(t(res.messageId), { variant: 'error' })
         return

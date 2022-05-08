@@ -22,9 +22,9 @@ import { useSnackbar } from 'notistack'
 
 import XDivider from '../components/divider.jsx'
 import UserContext from '../components/user-context'
-import { mobius } from '../utils/mobius'
 import { setLocalStorage } from '../utils/localStorage'
 import { purgeCreds } from '../utils/credUtil'
+import { changeEmail, changeNickName, changePassword } from '../api'
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
 const emailRegex = /^[^@]+@[^@]+\.[^@]+$/
@@ -87,20 +87,16 @@ const User = () => {
       return
     }
 
-    mobius.post('/api/user/changeNickName')
-      .data({ nickName })
-      .priv(true)
-      .do()
-      .then(({ success, messageId }) => {
-        setEditNickName(false)
-        enqueueSnackbar(t(messageId), { variant: success ? 'success' : 'error' })
+    changeNickName(nickName).then(({ success, messageId }) => {
+      setEditNickName(false)
+      enqueueSnackbar(t(messageId), { variant: success ? 'success' : 'error' })
 
-        if (success) {
-          const newUserInfo = { ...userContext.user, nickName }
-          userContext.setUser(newUserInfo)
-          setLocalStorage('User.Info', JSON.stringify(newUserInfo))
-        }
-      })
+      if (success) {
+        const newUserInfo = { ...userContext.user, nickName }
+        userContext.setUser(newUserInfo)
+        setLocalStorage('User.Info', JSON.stringify(newUserInfo))
+      }
+    })
   }
 
   const startEditEmail = () => setEditEmail(true)
@@ -116,20 +112,16 @@ const User = () => {
       return
     }
 
-    mobius.post('/api/user/changeEmail')
-      .data({ email })
-      .priv(true)
-      .do()
-      .then(({ success, messageId }) => {
-        setEditEmail(false)
-        enqueueSnackbar(t(messageId), { variant: success ? 'success' : 'error' })
+    changeEmail(email).then(({ success, messageId }) => {
+      setEditEmail(false)
+      enqueueSnackbar(t(messageId), { variant: success ? 'success' : 'error' })
 
-        if (success) {
-          const newUserInfo = { ...userContext.user, email }
-          userContext.setUser(newUserInfo)
-          setLocalStorage('User.Info', JSON.stringify(newUserInfo))
-        }
-      })
+      if (success) {
+        const newUserInfo = { ...userContext.user, email }
+        userContext.setUser(newUserInfo)
+        setLocalStorage('User.Info', JSON.stringify(newUserInfo))
+      }
+    })
   }
 
   const [openLogout, setOpenLogout] = useState(false)
@@ -163,14 +155,10 @@ const User = () => {
       return
     }
 
-    mobius.post('/api/user/changePassword')
-      .data({ password })
-      .priv(true)
-      .do()
-      .then(({ success, messageId }) => {
-        setOpenChangePassword(false)
-        enqueueSnackbar(t(messageId), { variant: success ? 'success' : 'error' })
-      })
+    changePassword(password).then(({ success, messageId }) => {
+      setOpenChangePassword(false)
+      enqueueSnackbar(t(messageId), { variant: success ? 'success' : 'error' })
+    })
   }
 
   return (

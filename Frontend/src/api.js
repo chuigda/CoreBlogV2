@@ -12,3 +12,18 @@ export const addBlog = (title, brief, content) => mobius
   .data({ title, brief, content })
   .priv(true)
   .do()
+
+export const changeNickName = nickName => mobius.post('/api/user/changeNickName')
+  .data({ nickName })
+  .priv(true)
+  .do()
+
+export const changeEmail = email => mobius.post('/api/user/changeEmail')
+  .data({ email })
+  .priv(true)
+  .do()
+
+export const changePassword = password => mobius.post('/api/user/changePassword')
+  .data({ password })
+  .priv(true)
+  .do()
