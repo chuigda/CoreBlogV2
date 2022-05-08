@@ -9,6 +9,7 @@ import { listBlog } from '../api'
 import BlogCard from '../components/blog-card.jsx'
 import ContainerContext from '../components/container-context'
 import { getSessionStorage } from '../utils/localStorage'
+import { Button, Typography } from '@mui/material'
 
 // eslint-disable-next-line react/prop-types
 const IndexInner = ({ display }, ref) => {
@@ -20,14 +21,15 @@ const IndexInner = ({ display }, ref) => {
   const containerContext = useContext(ContainerContext)
 
   const loadBlogList = () => {
-    listBlog(currentPage, 10, false).then(res => {
-      if (!res.success) {
-        enqueueSnackbar(t(res.messageId), { variant: 'error' })
+    listBlog(currentPage, 10, false).then(({ success, messageId, data }) => {
+      if (!success) {
+        enqueueSnackbar(t(messageId), { variant: 'error' })
         return
       }
 
-      const { blogs } = res.data
+      const { blogs, totalCount } = data
       setBlogList(blogs)
+      setHasMoreContent(blogs.length < totalCount)
     }).catch(() => enqueueSnackbar(t('Server.InternalError'), { variant: 'error' }))
   }
 
@@ -67,6 +69,15 @@ const IndexInner = ({ display }, ref) => {
       rowGap: '14px'
     }}>
       { blogComponents }
+      { hasMoreContent
+        ? <Button sx={{ alignSelf: 'center' }}>
+            { t('UI.Index.LoadMore') }
+          </Button>
+        : <Typography variant="body2"
+                      sx={{ alignSelf: 'center' }}>
+            { t('UI.Index.NoMoreContent') }
+          </Typography>
+      }
     </div>
   )
 }

@@ -31,7 +31,7 @@ const translation = {
 
         'UI.Format.Time': 'HH:mm',
         'UI.Format.DateTime': 'D/M HH:mm',
-        'UI.Format.YearDateTime': 'M/D/YYYY HH:mm',
+        'UI.Format.YearDateTime': 'M/D/YYYY',
 
         'UI.AppBar.Search': 'Search...',
         'UI.MainMenu.SetLanguage': 'Choose language',
@@ -39,6 +39,8 @@ const translation = {
         'UI.MainMenu.CurrentUser': 'Current user',
         'UI.MainMenu.About': 'About CoreBlog',
         'UI.SetLanguage.Sample': 'The quick brown fox jumps over the lazy dog',
+        'UI.Index.LoadMore': 'Click to Load more',
+        'UI.Index.NoMoreContent': 'No more blogs',
         'UI.Blog.Author': 'Author',
         'UI.Blog.CreateTime': 'Created at',
         'UI.Blog.UpdateTime': 'Updated at',
@@ -132,7 +134,7 @@ const translation = {
 
         'UI.Format.Time': 'HH:mm',
         'UI.Format.DateTime': 'M 月 D 日 HH:mm',
-        'UI.Format.YearDateTime': 'YYYY 年 M 月 D 日 HH:mm',
+        'UI.Format.YearDateTime': 'YYYY 年 M 月 D 日',
 
         'UI.AppBar.Search': '搜索...',
         'UI.MainMenu.SetLanguage': '选择语言',
@@ -140,6 +142,8 @@ const translation = {
         'UI.MainMenu.CurrentUser': '当前用户',
         'UI.MainMenu.About': '关于 CoreBlog',
         'UI.SetLanguage.Sample': '我能吞下玻璃而不伤身体',
+        'UI.Index.LoadMore': '点击加载更多',
+        'UI.Index.NoMoreContent': '没有更多内容了',
         'UI.Blog.Author': '作者',
         'UI.Blog.CreateTime': '创建时间',
         'UI.Blog.UpdateTime': '最后更新',

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Stack, Card, CardContent
+  Stack, Card, CardContent, Tooltip
 } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import {
@@ -78,11 +78,19 @@ const BlogCard = ({
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 0, md: 4 }}>
           <div style={{ display: 'flex', columnGap: 4 }}>
             <Person />
-            <Typography component="div" sx={{ display: 'inline' }}>
-              { t('UI.Blog.Author') }
-              { ': ' }
-              { author }
-            </Typography>
+            <Tooltip title={author}>
+              <Typography component="div" sx={{
+                display: 'inline',
+                maxWidth: '200px',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }}>
+                { t('UI.Blog.Author') }
+                { ': ' }
+                { author }
+              </Typography>
+            </Tooltip>
           </div>
           <div style={{ display: 'flex', columnGap: 4 }}>
             <AccessTime />
