@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Typography,
   Divider,
@@ -20,6 +19,7 @@ import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
 
+import LoggedOut from './logged-out.jsx'
 import XDivider from '../components/divider.jsx'
 import UserContext from '../components/user-context'
 import { setLocalStorage } from '../utils/localStorage'
@@ -42,29 +42,9 @@ const User = () => {
   const history = useHistory()
   const { enqueueSnackbar } = useSnackbar()
 
-  const back = () => history.goBack()
-  const toLogin = () => history.replace('/login')
-
   if (!userContext.user) {
     return (
-      <Dialog open={true}>
-        <DialogTitle>
-          { t('UI.User.DidYouLogin.Title') }
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            { t('UI.User.DidYouLogin.Content') }
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={back}>
-            { t('UI.User.DidYouLogin.BackButton') }
-          </Button>
-          <Button onClick={toLogin}>
-            { t('UI.User.DidYouLogin.LoginButton') }
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <LoggedOut />
     )
   }
 

@@ -1,8 +1,7 @@
 import React, { useRef, useState } from 'react'
 import {
-  Switch, Route, Link, useHistory
+  Switch, Route, useHistory
 } from 'react-router-dom'
-import { Button } from '@mui/material'
 import MainAppBar from './components/app-bar.jsx'
 import Dial from './components/dial.jsx'
 import UserContext from './components/user-context'
@@ -15,6 +14,7 @@ import About from './views/about.jsx'
 import BlogEdit from './views/blog-edit.jsx'
 import User from './views/user.jsx'
 import { getLocalStorage } from './utils/localStorage'
+import LoggedOut from './views/logged-out.jsx'
 
 const initUserInfo = JSON.parse(getLocalStorage('User.Info'))
 
@@ -88,10 +88,7 @@ const App = () => {
                   <Language />
                 </Route>
                 <Route exact path="/logged-out">
-                  <div>You were logged out, damn it</div>
-                  <Link to="/login">
-                    <Button variant="contained">Goto log-in</Button>
-                  </Link>
+                  <LoggedOut />
                 </Route>
                 <Route exact path="/about">
                   <About />
