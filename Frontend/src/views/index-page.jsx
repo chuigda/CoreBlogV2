@@ -20,8 +20,9 @@ const IndexInner = ({ display }, ref) => {
   const [hasMoreContent, setHasMoreContent] = useState(false)
   const containerContext = useContext(ContainerContext)
 
-  const loadBlogList = () => {
-    listBlog(currentPage, 10, false).then(({ success, messageId, data }) => {
+  const loadInitBlogList = () => {
+    setCurrentPage(1)
+    listBlog(1, 10, false).then(({ success, messageId, data }) => {
       if (!success) {
         enqueueSnackbar(t(messageId), { variant: 'error' })
         return
@@ -33,7 +34,22 @@ const IndexInner = ({ display }, ref) => {
     }).catch(() => enqueueSnackbar(t('Server.InternalError'), { variant: 'error' }))
   }
 
-  useEffect(() => loadBlogList(1), [])
+  const loadMore = () => {
+    const nextPage = currentPage + 1
+    setCurrentPage(nextPage)
+    listBlog(nextPage, 10, false).then(({ success, messageId, data }) => {
+      if (!success) {
+        enqueueSnackbar(t(messageId), { variant: 'error' })
+        return
+      }
+
+      const { blogs, totalCount } = data
+      setBlogList([...blogList, ...blogs])
+      setHasMoreContent(currentPage * 10 + blogs.length < totalCount)
+    })
+  }
+
+  useEffect(() => loadInitBlogList(), [])
 
   useEffect(() => {
     if (display) {
@@ -45,7 +61,7 @@ const IndexInner = ({ display }, ref) => {
   }, [display])
 
   useImperativeHandle(ref, () => ({
-    loadBlogList
+    loadBlogList: loadInitBlogList
   }))
 
   const blogComponents = useMemo(() => blogList.map((x, idx) => (
@@ -70,7 +86,7 @@ const IndexInner = ({ display }, ref) => {
     }}>
       { blogComponents }
       { hasMoreContent
-        ? <Button sx={{ alignSelf: 'center' }}>
+        ? <Button sx={{ alignSelf: 'center' }} onClick={loadMore}>
             { t('UI.Index.LoadMore') }
           </Button>
         : <Typography variant="body2"
