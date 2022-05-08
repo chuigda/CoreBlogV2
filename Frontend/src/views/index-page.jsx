@@ -1,23 +1,32 @@
+/* eslint-disable react/prop-types */
 import React, {
-  forwardRef, useEffect, useImperativeHandle, useMemo, useState, useContext
+  forwardRef, useEffect, useImperativeHandle, useMemo, useContext
 } from 'react'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { useTranslation } from 'react-i18next'
+import { Button, Typography } from '@mui/material'
 
 import { listBlog } from '../api'
 import BlogCard from '../components/blog-card.jsx'
 import ContainerContext from '../components/container-context'
-import { getSessionStorage } from '../utils/localStorage'
-import { Button, Typography } from '@mui/material'
 
-// eslint-disable-next-line react/prop-types
-const IndexInner = ({ display }, ref) => {
+const IndexInner = ({ bundle }, ref) => {
   const { enqueueSnackbar } = useSnackbar()
   const { t } = useTranslation()
-  const [blogList, setBlogList] = useState([])
-  const [currentPage, setCurrentPage] = useState(1)
-  const [hasMoreContent, setHasMoreContent] = useState(false)
+
+  const {
+    scroll,
+    setScroll,
+    initialized,
+    setInitialized,
+    blogList,
+    setBlogList,
+    currentPage,
+    setCurrentPage,
+    hasMoreContent,
+    setHasMoreContent
+  } = bundle
   const containerContext = useContext(ContainerContext)
 
   const loadInitBlogList = () => {
@@ -49,20 +58,25 @@ const IndexInner = ({ display }, ref) => {
     })
   }
 
-  useEffect(() => loadInitBlogList(), [])
+  useEffect(() => {
+    if (!initialized) {
+      setInitialized(true)
+      loadInitBlogList()
+    }
+  }, [])
+
+  const handleScroll = () => {
+    const scrollPosition = containerContext.current.scrollTop
+    setScroll(scrollPosition)
+  }
 
   useEffect(() => {
-    if (display) {
-      const scrollPosition = getSessionStorage('UI.ScrollPosition')
-      if (scrollPosition && containerContext.current) {
-        containerContext.current.scrollTo(0, scrollPosition)
-      }
-    }
-  }, [display])
+    containerContext.current.scrollTo(0, scroll)
+    containerContext.current.addEventListener('scroll', handleScroll)
+    return () => containerContext.current.removeEventListener('scroll', handleScroll)
+  }, [])
 
-  useImperativeHandle(ref, () => ({
-    loadBlogList: loadInitBlogList
-  }))
+  useImperativeHandle(ref, () => ({ loadInitBlogList }))
 
   const blogComponents = useMemo(() => blogList.map((x, idx) => (
     <BlogCard blogId={x.blogId}
@@ -80,7 +94,7 @@ const IndexInner = ({ display }, ref) => {
 
   return (
     <div style={{
-      display: display ? 'flex' : 'none',
+      display: 'flex',
       flexDirection: 'column',
       rowGap: '14px'
     }}>
@@ -101,7 +115,18 @@ const IndexInner = ({ display }, ref) => {
 const Index = forwardRef(IndexInner)
 
 Index.propTypes = {
-  display: PropTypes.any
+  bundle: PropTypes.shape({
+    scroll: PropTypes.number.isRequired,
+    setScroll: PropTypes.func.isRequired,
+    initialized: PropTypes.bool.isRequired,
+    setInitialized: PropTypes.func.isRequired,
+    blogList: PropTypes.array.isRequired,
+    setBlogList: PropTypes.func.isRequired,
+    currentPage: PropTypes.number.isRequired,
+    setCurrentPage: PropTypes.func.isRequired,
+    hasMoreContent: PropTypes.bool.isRequired,
+    setHasMoreContent: PropTypes.func.isRequired
+  }).isRequired
 }
 
 export default Index

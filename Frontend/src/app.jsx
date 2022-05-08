@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import {
-  Switch, Route, Link, useHistory, useRouteMatch
+  Switch, Route, Link, useHistory
 } from 'react-router-dom'
 import { Button } from '@mui/material'
 import MainAppBar from './components/app-bar.jsx'
@@ -14,29 +14,30 @@ import BlogRead from './views/blog-read.jsx'
 import About from './views/about.jsx'
 import BlogEdit from './views/blog-edit.jsx'
 import User from './views/user.jsx'
-import { getLocalStorage, setSessionStorage } from './utils/localStorage'
+import { getLocalStorage } from './utils/localStorage'
 
 const initUserInfo = JSON.parse(getLocalStorage('User.Info'))
 
 const App = () => {
   const history = useHistory()
   const [user, setUser] = useState(initUserInfo)
-  const matchIndex = useRouteMatch({
-    path: '/',
-    strict: true,
-    exact: true
-  })
   const containerRef = useRef()
   const indexPageRef = useRef()
+
+  const [scroll, setScroll] = useState(0)
+  const [initialized, setInitialized] = useState(false)
+  const [blogList, setBlogList] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [hasMoreContent, setHasMoreContent] = useState(false)
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <ContainerContext.Provider value={containerRef}>
         <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
           <MainAppBar refreshIndex={() => {
-            setSessionStorage('UI.ScrollPosition', 0)
+            setScroll(0)
             containerRef.current.scrollTo(0, 0)
-            indexPageRef.current.loadBlogList(1)
+            indexPageRef.current.loadInitBlogList()
           }} />
           <div style={{
             display: 'flex',
@@ -54,8 +55,23 @@ const App = () => {
               maxWidth: 1000,
               width: 'calc(100% - 20px)'
             }}>
-              { <Index ref={indexPageRef} display={matchIndex} /> }
               <Switch>
+                <Route exact path="/">
+                  <Index ref={indexPageRef}
+                         bundle={{
+                           scroll,
+                           setScroll,
+                           initialized,
+                           setInitialized,
+                           blogList,
+                           setBlogList,
+                           currentPage,
+                           setCurrentPage,
+                           hasMoreContent,
+                           setHasMoreContent
+                         }}
+                  />
+                </Route>
                 <Route exact path="/user">
                   <User />
                 </Route>

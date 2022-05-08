@@ -13,14 +13,11 @@ import { Link } from 'react-router-dom'
 
 import XDivider from './divider.jsx'
 import { prettyTime } from '../utils/prettyTime'
-import { setSessionStorage } from '../utils/localStorage'
-import ContainerContext from './container-context'
 
 const BlogCard = ({
   blogId, author, title, brief, content, commentCount, createdAt, lastUpdate, isPreview
 }) => {
   const { t } = useTranslation()
-  const containerContext = useContext(ContainerContext)
 
   const timeFmt = t('UI.Format.Time')
   const dateTimeFmt = t('UI.Format.DateTime')
@@ -47,11 +44,7 @@ const BlogCard = ({
                         }
                       } : {})
                     }}
-                    to={isPreview ? `/blog/${blogId}` : undefined}
-                    onClick={isPreview ? () => setSessionStorage(
-                      'UI.ScrollPosition',
-                      `${containerContext.current.scrollTop}`
-                    ) : undefined}>
+                    to={isPreview ? `/blog/${blogId}` : undefined}>
           {title}
         </Typography>
         <XDivider />
