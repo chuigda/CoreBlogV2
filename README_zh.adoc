@@ -1,0 +1,43 @@
+= CoreBlogV2
+author: Chuigda <icey@icey.tech>
+
+这是CoreBlog的第二个版本, link:http://47.104.77.222[点击这里] 访问示例站点.
+
+你也可以访问 link:http://120.78.128.153/coreblog/index.php[V1版].
+
+== 特别提示
+尽管我们在编写的时候就注重代码质量并进行了最佳实践，但这个博客还是过于简单以至于可能无法满足你的需求，并且对于新入坑的用户不太友好（特别是你没了解过 HTTP/Linux/nginx 之类的东西的话）。如果你在找一个功能齐全且好用的博客系统,请考虑 link:https://github.com/YunYouJun/valaxy[valaxy] 或者 link:https://hexo.io[hexo]（你可以在 https://github.com/YunYouJun/hexo-theme-yun[这里] 找到一份不错的 hexo 配置）。
+
+如果你真的很喜欢这个博客的风格，或是为了学习而来，那就接着往下看吧。
+
+== 在本地启动项目
+* 请确保 Redis 和 MongoDB 已经安装好并启动
+** CoreBlogV2 会尝试连接 Redis `127.0.0.1:6379` 和 MongoDB `127.0.0.1:27017`  
+** 如果你的设置不是默认端口, 你需要修改 `Backstage/config/config.dev.js`
+* 克隆本项目
+* 在 `Backstage` 和 `Frontend` 目录分别运行 `npm install`
+* 在 `Backstage` 目录中运行 `node index.js`
+* 同时在 `Frontend` 目录中运行 `npm run dev`
+* 访问 `127.0.0.1:3000`
+
+== 创建测试用户
+到目前为止还没有办法直接从前端页面上创建用户。 你需要一个 HTTP “调试”工具来给自己创建账户。
+
+[source,http]
+----
+POST /api/user/createUserAdmin HTTP/1.1
+Content-Type: application/json
+
+{
+  "authToken": "你在配置文件里填写的 auth token",
+  "userName": "...",
+  "nickName": "...",
+  "password": "...",
+  "email": "..."
+}
+----
+
+接着你就可以用你设定的用户名和密码登录了
+
+== 构建
+懒得写了... 如果你能理解上面“创建测试用户”那一步的话，这应该是很简单的。欢迎 PR。
