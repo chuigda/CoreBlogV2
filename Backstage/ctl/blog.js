@@ -1,8 +1,10 @@
 const express = require('express')
 
-const { intString, boolString, objectId, nonEmtpyString } = require('../util/assertions.js')
+const { intString, boolString, objectId, nonEmptyString } = require('../util/assertions.js')
 const { privileged } = require('../auth.js')
-const { createBlog, countBlog, getBlog, listBlog, updateBlog, deleteBlog } = require('../svc/blog.js')
+const {
+  createBlog, countBlog, getBlog, listBlog, updateBlog, deleteBlog, searchBlogByTitle, searchBlogByContent
+} = require('../svc/blog.js')
 const { trimBlogInfo } = require('../svc/trim.js')
 const { verifyBody, verifyQuery } = require('../util/verify.js')
 
@@ -12,9 +14,9 @@ router.post(
   '/add',
   privileged,
   verifyBody({
-    title: nonEmtpyString,
-    brief: nonEmtpyString,
-    content: nonEmtpyString,
+    title: nonEmptyString,
+    brief: nonEmptyString,
+    content: nonEmptyString,
   }),
   async (req, res) => {
     const { title, brief, content } = req.body
@@ -82,7 +84,7 @@ router.post(
   privileged,
   verifyBody({
     blogId: objectId,
-    newContent: nonEmtpyString
+    newContent: nonEmptyString
   }),
   async (req, res) => {
     const { blogId, newContent } = req.body
@@ -104,6 +106,29 @@ router.post('/delete', privileged, verifyBody({ blogId: objectId }), async (req,
   res.json({
     success: result === 'Success',
     messageId: `Blog.Delete.${result}`
+  })
+})
+
+router.get('/searchTitle', verifyQuery({ searchKey: nonEmptyString }), async (req, res) => {
+  const { searchKey } = req.query
+  const blogs = await searchBlogByTitle(searchKey)
+  console.log(blogs)
+
+  res.json({
+    success: true,
+    messageId: 'Blog.Search.Success',
+    data: blogs.map(trimBlogInfo)
+  })
+})
+
+router.get('/searchContent', verifyQuery({ searchKey: nonEmptyString }), async (req, res) => {
+  const { searchKey } = req.query
+  const blogs = await searchBlogByContent(searchKey)
+
+  res.json({
+    success: true,
+    messageId: 'Blog.Search.Success',
+    data: blogs.map(trimBlogInfo)
   })
 })
 

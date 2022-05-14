@@ -13,6 +13,7 @@ const config = require('./config')
 enableChainAPI()
 
 process.on('uncaughtException', err => console.error('uncaught exception:', err))
+process.on('unhandledRejection', err => console.error('unhandled rejection:', err))
 
 const app = express()
 const { port } = config

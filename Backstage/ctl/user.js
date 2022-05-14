@@ -1,21 +1,21 @@
 const express = require('express')
 
 const {
-  createUser, findUser, userLogin, editUserNickname, editUserEmail, editUserPassword
+  createUser, findUser, userLogin, editUserNickname, editUserEmail, editUserPassword, searchUserByName
 } = require('../svc/user.js')
 const { makeAccessToken } = require('../auth.js')
 const { trimUserInfo } = require('../svc/trim.js')
 const { verifyBody, verifyQuery } = require('../util/verify.js')
 const config = require('../config')
 const { privileged } = require('../auth')
-const { nonEmtpyString, emailString, passwordString } = require('../util/assertions.js')
+const { nonEmptyString, emailString, passwordString } = require('../util/assertions.js')
 
 const router = express.Router()
 
 const createUserAssertion = {
   authToken: 'string'.assertValue(config.authToken),
-  userName: nonEmtpyString,
-  nickName: nonEmtpyString,
+  userName: nonEmptyString,
+  nickName: nonEmptyString,
   password: passwordString,
   email: emailString
 }
@@ -72,7 +72,7 @@ router.post('/login', verifyBody({ userName: 'string', password: 'string' }), as
 router.post(
   '/changeNickName',
   privileged,
-  verifyBody({ nickName: nonEmtpyString }),
+  verifyBody({ nickName: nonEmptyString }),
   async (req, res) => {
     const { nickName } = req.body
     const { userId } = req.auth
@@ -132,6 +132,21 @@ router.post(
         messageId: 'User.Edit.Failed'
       })
     }
+  }
+)
+
+router.get(
+  '/search',
+  verifyQuery({ userName: nonEmptyString }),
+  async (req, res) => {
+    const { userName } = req.query
+
+    const users = await searchUserByName(userName)
+    res.json({
+      success: true,
+      messageId: 'User.Search.Success',
+      data: users.map(trimUserInfo)
+    })
   }
 )
 

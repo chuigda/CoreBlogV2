@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { privileged } = require('../auth.js')
-const { objectId, nonEmtpyString } = require('../util/assertions.js')
+const { objectId, nonEmptyString } = require('../util/assertions.js')
 const { createComment, deleteComment } = require('../svc/comment.js')
 const { verifyBody } = require('../util/verify.js')
 
@@ -9,7 +9,7 @@ const router = express.Router()
 
 const addCommentBodyAssertion = {
   blogId: objectId,
-  content: nonEmtpyString,
+  content: nonEmptyString,
   replyTo: objectId.orNull()
 }
 

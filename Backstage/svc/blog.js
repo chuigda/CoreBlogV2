@@ -16,8 +16,8 @@ const createBlog = async (authorId, title, brief, content) => {
     lastUpdate: new Date()
   })
 
-  await blog.save()
-  return blog._id
+  const savedBlog = await blog.save()
+  return savedBlog._id
 }
 
 const getBlog = async blogId => {
@@ -62,37 +62,42 @@ const getBlog = async blogId => {
 
 const countBlog = () => Blog.countDocuments()
 
-const listBlog = (page, pageSize, sortByLastUpdate) => {
+const listBlogLookupPipeline = [
+  {
+    $lookup: {
+      from: 'users',
+      localField: 'authorId',
+      foreignField: '_id',
+      as: 'author'
+    },
+  },
+  {
+    $lookup: {
+      from: 'comments',
+      localField: '_id',
+      foreignField: 'blogId',
+      pipeline: [
+        { $count: 'count' }
+      ],
+      as: 'commentCount'
+    },
+  },
+  { $unwind: { path: '$commentCount', preserveNullAndEmptyArrays: true } },
+  { $unwind: { path: '$author' } }
+]
+
+const listBlog = async (page, pageSize, sortByLastUpdate) => {
   const sortPipeline = sortByLastUpdate
     ? [{ $sort: { lastUpdate: -1 } }]
     : [{ $sort: { createdAt: -1 } }]
 
-  return Blog.aggregate([
-    {
-      $lookup: {
-        from: 'users',
-        localField: 'authorId',
-        foreignField: '_id',
-        as: 'author'
-      },
-    },
-    {
-      $lookup: {
-        from: 'comments',
-        localField: '_id',
-        foreignField: 'blogId',
-        pipeline: [
-          { $count: 'count' }
-        ],
-        as: 'commentCount'
-      },
-    },
-    { $unwind: { path: '$commentCount', preserveNullAndEmptyArrays: true } },
-    { $unwind: { path: '$author' } },
+  const blogs = await Blog.aggregate([
+    ...listBlogLookupPipeline,
     ...sortPipeline,
     { $skip: (page - 1) * pageSize },
     { $limit: pageSize }
   ])
+  return blogs
 }
 
 const updateBlog = async (blogId, userId, newContent) => {
@@ -128,11 +133,65 @@ const deleteBlog = async (blogId, userId) => {
   return 'Success'
 }
 
+const searchBlogByTitle = async searchKey => {
+  const blogs = await Blog.aggregate([
+    {
+      $match: {
+        $or: [
+          {
+            title: {
+              $regex: searchKey,
+              $options: 'i'
+            }
+          },
+          {
+            brief: {
+              $regex: searchKey,
+              $options: 'i'
+            }
+          }
+        ]
+      }
+    },
+    ...listBlogLookupPipeline,
+    { $sort: { lastUpdate: -1 } }
+  ])
+  return blogs
+}
+
+const searchBlogByContent = async searchKey => {
+  const blogs = await Blog.aggregate([
+    {
+      $match: {
+        $or: [
+          {
+            brief: {
+              $regex: searchKey,
+              $options: 'i'
+            }
+          },
+          {
+            content: {
+              $regex: searchKey,
+              $options: 'i'
+            }
+          }
+        ]
+      }
+    },
+    ...listBlogLookupPipeline,
+    { $sort: { lastUpdate: -1 } }
+  ])
+  return blogs
+}
+
 module.exports = {
   createBlog,
   getBlog,
   countBlog,
   listBlog,
   updateBlog,
-  deleteBlog
+  deleteBlog,
+  searchBlogByTitle,
+  searchBlogByContent
 }

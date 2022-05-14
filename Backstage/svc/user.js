@@ -21,7 +21,10 @@ const createUser = async (userName, nickName, password, email) => {
   await user.save()
 }
 
-const findUser = userName => User.findOne({ userName })
+const findUser = async userName => {
+  const user = await User.findOne({ userName })
+  return user.toObject()
+}
 
 const userLogin = async (userName, password) => {
   const user = await User.findOne({ userName })
@@ -72,11 +75,32 @@ const editUserPassword = async (userId, password) => {
   return true
 }
 
+const searchUserByName = async name => {
+  const user = await User.find({
+    $or: [
+      {
+        userName: {
+          $regex: name,
+          $options: 'i'
+        }
+      },
+      {
+        nickName: {
+          $regex: name,
+          $options: 'i'
+        }
+      }
+    ]
+  })
+  return user.map(item => item.toObject())
+}
+
 module.exports = {
   createUser,
   findUser,
   userLogin,
   editUserNickname,
   editUserEmail,
-  editUserPassword
+  editUserPassword,
+  searchUserByName
 }
