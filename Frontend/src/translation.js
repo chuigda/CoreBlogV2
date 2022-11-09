@@ -206,6 +206,106 @@ const translation = {
         'UI.Search.Unimplemented': '此功能尚未实现'
       }
     },
+     zh_tw: {
+       translation: {
+        'User.CreateByAdmin. BadToken': '管理員密匙錯誤'，
+        'User.CreateByAdmin. Success': '成功創建用戶'，
+        'User.Info. NotFound': '用戶檔案不存在'，
+        'User.Info. Success': '成功獲取用戶檔案'，
+        'User.Login. Success': '登入成功'，
+        'User.Login. NotFound': '用戶名或密碼錯誤'，
+        'User.Edit. Success': '修改成功'，
+        'User.Edit. Fail': '修改失敗'，
+        'Blog.Add. Success': '創建部落格成功'，
+        'Blog.Get. NotFound': '部落格不存在或已被删除'，
+        'Blog.Get. Success': '獲取部落格資訊成功'，
+        'Blog.List. Success': '獲取部落格清單成功'，
+        'Blog.Update. NotFound': '部落格不存在或已被删除'，
+        'Blog.Update. Unauthorized': '你不是該部落格的作者'，
+        'Blog.Update. Success': '更新部落格成功'，
+        'Blog.Delete. NotFound': '部落格不存在或已被删除'，
+        'Blog.Delete. Unauthorized': '你不是該部落格的作者'，
+        'Blog.Delete. Success': '删除部落格成功'，
+        'Comment.Add. NotFound': '部落格不存在或已被删除'，
+        'Comment.Add. Success': '評論成功'，
+        'Comment.Delete. NotFound': '評論不存在或已被删除'，
+        'Comment.Delete. Unauthorized': '你不是該評論的作者'，
+        'Comment.Delete. Success': '删除評論成功'，
+        'Server. InternalError': '服務器遇到問題，請稍候再試'，
+
+                'UI.Format. Time': 'HH:mm'，
+
+                'UI.Format. DateTime': 'M月D日HH:mm'，
+
+                'UI.Format. YearDateTime': 'YYYY年M月D日'，
+
+        'UI.AppBar. Search': '蒐索…'，
+        'UI.MainMenu. SetLanguage': '選擇語言'，
+        'UI.MainMenu. Login': '登入'，
+        'UI.MainMenu. CurrentUser': '當前用戶'，
+        'UI.MainMenu. About': '關於CoreBlog'，
+        'UI.SetLanguage. Sample': '我能吞下玻璃而不傷身體'，
+        'UI.Index. LoadMore': '點擊加載更多'，
+        'UI.Index. NoMoreContent': '沒有更多內容了'，
+        'UI.Blog. Author': '作者'，
+        'UI.Blog. CreateTime': '創建時間'，
+        'UI.Blog. UpdateTime': '最後更新'，
+        'UI.Blog. CommentCount': '條評論'，
+        'UI.BlogEdit. TitleInput': '標題'，
+        'UI.BlogEdit. BriefInput': '簡介'，
+        'UI.BlogEdit. SaveButton': '保存'，
+        'UI.BlogEdit. NeedTitle': '標題不能為空'，
+        'UI.BlogEdit. NeedBrief': '簡介不能為空'，
+        'UI.BlogEdit. NeedContent': '內容不能為空'，
+        'UI.Login. Title': '登入'，
+        'UI.Login. Username': '用戶名'，
+        'UI.Login. Password': '密碼'，
+        'UI.Login. Submit': '登入'，
+        'UI.Login. Unfilled': '請填寫所有欄位'，
+        'UI.About. Title': '關於'，
+        'UI.About. Content': '這是CoreBlog的第二版，採用Express. js和React. js實現。'
++ '這個新版本中包含了很多UI更新，且很多功能已經得到增强。'，
+        'UI.About. Skills': '使用的科技'，
+        'UI.About.Version. Frontend': '前端版本'，
+        'UI.About.Version. Backend': '後端版本'，
+        'UI.About. Bothering': '"時運不濟，命運多舛，馮唐易老，李廣難封。'
++ '屈賈誼於長沙，非無聖主； 竄梁鴻於海曲，豈乏明時。”'，
+        'UI.About. EasterEggClick0': '再點擊'，
+        'UI.About. EasterEggClick1': '次進入開發者模式'，
+        'UI.About. EasterEggClick2': '你已進入開發者模式'，
+        'UI.User.DidYouLogin. Title': '好像搞錯了什麼？'，
+        'UI.User.DidYouLogin. Content': '你似乎還沒有登錄'，
+        'UI.User.DidYouLogin. LoginButton': '去登入'，
+        'UI.User.DidYouLogin. BackButton': '返回'，
+        'UI.User. UserInfo': '用戶資訊'，
+        'UI.User. UserName': '用戶名'，
+        'UI.User. NickName': '昵稱'，
+        'UI.User. Email': 'Email'，
+        'UI.User. Password': '密碼'，
+        'UI.User. ConfirmPassword': '確認密碼'，
+        'UI.User. ChangePassword': '修改密碼'，
+        'UI.User. Logout': '註銷登錄'，
+        'UI.User. BadNickName': '請輸入一個合法的昵稱'，
+        'UI.User. BadEmail': '請輸入一個有效的Email'，
+        'UI.User. UnequalPassword': '兩次輸入的密碼不匹配'，
+        'UI.User. BadPassword': '請輸入一個足够複雜的密碼'，
+        'UI.User. PasswordRequirement': '密碼應該至少有8比特，並且包含大小寫字母和數位'，
+        'UI.User.ConfirmLogout. Title': '確定要登出嗎'，
+        'UI.User. LogoutSuccess': '您已成功登出'，
+        'UI.Dial. WriteBlog': '撰寫部落格'，
+        'UI.Dial. Share': '分享'，
+        'UI.Dialog. Share': '分享'，
+        'UI.Dialog. CopyLink': '複製連結'，
+        'UI.Dialog. Copied': '已複製！'，
+        'UI.Dialog. Close': '關閉'，
+        'UI.Dialog. Ok': '確認'，
+        'UI.Dialog. Cancel': '取消'，
+        'UI.Search. Title': '在標題中蒐索'，
+        'UI.Search. FullText': '全文檢索搜尋'，
+        'UI.Search. User': '蒐索用戶'，
+        'UI.Search. Unimplemented': '此功能尚未實現'
+      }
+    },
   },
   lng: getLocalStorage('UI.Language') || 'zh_CN',
   fallbackLng: 'zh_CN',
